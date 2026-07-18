@@ -80,12 +80,16 @@
                         <p class="text-xs text-slate-400">ระบบบูรณาการข้อมูลคู่แข่งและชุดปฏิบัติการแก้ไขปัญหาราคาเชิงรุกรายภูมิภาค</p>
                     </div>
                 </div>
-                <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-3">
                     <span class="text-sm bg-slate-800 px-3 py-1.5 rounded-full border border-slate-700 text-slate-300">
                         <i class="fa-solid fa-user-circle mr-2 text-orange-400"></i> สวัสดีคุณ <span id="userDisplayName">User</span>
                     </span>
+                    <!-- Button: Change Password -->
+                    <button onclick="openChangePasswordModal()" class="bg-amber-500/20 hover:bg-amber-500 text-amber-300 hover:text-slate-950 border border-amber-500/30 text-xs px-3 py-1.5 rounded-full transition duration-150">
+                        <i class="fa-solid fa-key mr-1.5"></i>เปลี่ยนรหัสผ่าน
+                    </button>
                     <button onclick="handleLogout()" class="text-slate-400 hover:text-rose-400 text-sm transition duration-150">
-                        <i class="fa-solid fa-power-off"></i> ออกจากระบบ
+                        <i class="fa-solid fa-power-off ml-2"></i> ออกจากระบบ
                     </button>
                 </div>
             </div>
@@ -294,7 +298,7 @@
                     </div>
                 </div>
 
-                <!-- ================= 2. TABLE: RAW DATA DATABASE ================= -->
+                <!-- ================= 3. TABLE: RAW DATA DATABASE ================= -->
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 flex flex-col">
                     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-4 mb-4 border-b border-slate-100 gap-4">
                         <div class="flex items-center space-x-2">
@@ -395,7 +399,7 @@
                     </div>
                 </div>
 
-                <!-- ================= 3. ADVANCED: TABLE REPORT BLOCK COMPETITIVE ANALYSIS (FULL REMARKS INCLUDED) ================= -->
+                <!-- ================= 4. ADVANCED: TABLE REPORT BLOCK COMPETITIVE ANALYSIS (FULL REMARKS INCLUDED) ================= -->
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 flex flex-col">
                     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-4 mb-4 border-b border-slate-100 gap-4">
                         <div class="flex items-center space-x-2">
@@ -493,7 +497,7 @@
                     </div>
                 </div>
 
-                <!-- ================= 4. TABLE: STRATEGIC AVERAGE PRICE & BRAND POSITIONING ================= -->
+                <!-- ================= 5. TABLE: STRATEGIC AVERAGE PRICE & BRAND POSITIONING ================= -->
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 flex flex-col">
                     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-4 mb-4 border-b border-slate-100 gap-4">
                         <div class="flex items-center space-x-2">
@@ -589,10 +593,44 @@
         </main>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-slate-100 border-t border-slate-200 text-center py-4 text-xs text-slate-500">
-        <p>© 2026 Q-con Enterprise Competitor Intelligence Portal. Google Sheets Web App Connection Engine.</p>
-    </footer>
+    <!-- ================= SECTION 3: EDIT PASSWORD MODAL ================= -->
+    <div id="changePasswordModal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-2xl shadow-2xl border border-slate-100 max-w-md w-full p-6 relative">
+            <button onclick="closeChangePasswordModal()" class="absolute right-4 top-4 text-slate-400 hover:text-slate-600 transition">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="text-center mb-6">
+                <div class="bg-amber-100 text-amber-600 w-12 h-12 rounded-full flex items-center justify-center text-xl mx-auto mb-3">
+                    <i class="fa-solid fa-key"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-800 font-sans">เปลี่ยนรหัสผ่านผู้ใช้งานใหม่</h3>
+                <p class="text-xs text-slate-400 mt-1">ตั้งค่ารหัสผ่านใหม่เพื่อความปลอดภัยของฐานข้อมูลส่วนบุคคล</p>
+            </div>
+            
+            <form id="changePasswordForm" onsubmit="handleChangePassword(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">รหัสผ่านเดิม <span class="text-red-500">*</span></label>
+                    <input type="password" id="oldPassword" required placeholder="กรอกรหัสผ่านปัจจุบัน" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-orange-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">รหัสผ่านใหม่ <span class="text-red-500">*</span></label>
+                    <input type="password" id="newPassword" required placeholder="รหัสผ่านใหม่ (ไม่ต่ำกว่า 6 ตัวอักษร)" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-orange-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">ยืนยันรหัสผ่านใหม่ <span class="text-red-500">*</span></label>
+                    <input type="password" id="confirmNewPassword" required placeholder="กรอกรหัสผ่านใหม่อีกครั้งเพื่อยืนยัน" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-orange-500">
+                </div>
+                <div class="flex space-x-3 pt-2">
+                    <button type="button" onclick="closeChangePasswordModal()" class="w-1/2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium rounded-lg py-2.5 text-xs transition">
+                        ยกเลิก
+                    </button>
+                    <button type="submit" id="btnSubmitNewPass" class="w-1/2 bg-orange-600 hover:bg-orange-700 text-white font-medium rounded-lg py-2.5 text-xs transition shadow-sm">
+                        ยืนยันการเปลี่ยนรหัส
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- Toast Alert Container -->
     <div id="toast" class="fixed bottom-6 right-6 bg-slate-900 text-white px-6 py-4 rounded-xl shadow-2xl flex items-center space-x-3 transition-opacity duration-300 opacity-0 pointer-events-none z-50">
@@ -605,8 +643,8 @@
 
     <!-- JavaScript Logic Core -->
     <script>
-        // ใช้ URL API Google Apps Script 
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwEoVMqipCvkjxhhlUE9bV8w9NtFCzwMObhOJLRtxY0CmIv4OKIHDSwR64mVM9bzT_3/exec";
+        // ใช้ URL API Google Apps Script เส้นใหม่ที่อัปเดตเรียบร้อยแล้ว
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzl9dqPNhQVr6XA792QkrcUPfiyNzP2hCW6dzaHElU1HOcRReQMkSNc19q4da4RxLTE/exec";
 
         let currentUser = null;
         let globalRawData = []; 
@@ -615,7 +653,7 @@
 
         const monthsOrder = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
 
-        // ฐานข้อมูลสถานที่ตั้งโรงงานตามโจทย์ระบุ (Plant Location Base)
+        // ฐานข้อมูลสถานที่ตั้งโรงงานตามที่ตั้งฐานผลิตจริง
         const plantLocations = {
             "Q-con": "East / West / South (สินค้าของเรา)",
             "Smart Block": "East",
@@ -642,7 +680,10 @@
                 .then(res => res.json())
                 .then(response => {
                     if (response.status === "success") {
-                        currentUser = response;
+                        currentUser = {
+                            username: user,
+                            fullName: response.fullName
+                        };
                         document.getElementById('userDisplayName').innerText = response.fullName;
                         
                         document.getElementById('loginPage').classList.add('hidden');
@@ -674,7 +715,63 @@
             document.getElementById('btnLogin').innerHTML = `<i class="fa-solid fa-sign-in-alt mr-1"></i> เข้าสู่ระบบพอร์ทัล`;
         }
 
-        // 3. ควบคุมการแสดงผล/ซ่อน ตารางข้อมูลดิบ
+        // 3. ฟังก์ชันเปิด/ปิด หน้าต่างแก้ไขรหัสผ่านใหม่ (Modal Controllers)
+        function openChangePasswordModal() {
+            document.getElementById('changePasswordModal').classList.remove('hidden');
+        }
+
+        function closeChangePasswordModal() {
+            document.getElementById('changePasswordModal').classList.add('hidden');
+            document.getElementById('changePasswordForm').reset();
+        }
+
+        // 4. บันทึกและอัปเดตรหัสผ่านใหม่ผ่าน Web App API
+        function handleChangePassword(event) {
+            event.preventDefault();
+            const btn = document.getElementById('btnSubmitNewPass');
+            btn.disabled = true;
+            btn.innerText = "กำลังประมวลผล...";
+
+            const oldPass = document.getElementById('oldPassword').value;
+            const newPass = document.getElementById('newPassword').value;
+            const confirmNewPass = document.getElementById('confirmNewPassword').value;
+
+            if (newPass.length < 6) {
+                showToast("รหัสผ่านสั้นเกินไป", "กรุณาตั้งรหัสผ่านใหม่อย่างน้อย 6 ตัวอักษรขึ้นไป", "error");
+                btn.disabled = false;
+                btn.innerText = "ยืนยันการเปลี่ยนรหัส";
+                return;
+            }
+
+            if (newPass !== confirmNewPass) {
+                showToast("ข้อมูลไม่ตรงกัน", "รหัสผ่านใหม่และช่องยืนยันรหัสผ่านไม่ตรงกัน", "error");
+                btn.disabled = false;
+                btn.innerText = "ยืนยันการเปลี่ยนรหัส";
+                return;
+            }
+
+            const url = `${WEB_APP_URL}?action=changePassword&username=${encodeURIComponent(currentUser.username)}&oldPassword=${encodeURIComponent(oldPass)}&newPassword=${encodeURIComponent(newPass)}`;
+
+            fetch(url)
+                .then(res => res.json())
+                .then(response => {
+                    if (response.status === "success") {
+                        showToast("เปลี่ยนรหัสสำเร็จแล้ว", "รหัสผ่านใหม่ของคุณถูกนำไปแทนที่รหัสเดิมในระบบ Google Sheets แล้ว", "success");
+                        closeChangePasswordModal();
+                    } else {
+                        showToast("เปลี่ยนรหัสล้มเหลว", response.message, "error");
+                    }
+                    btn.disabled = false;
+                    btn.innerText = "ยืนยันการเปลี่ยนรหัส";
+                })
+                .catch(err => {
+                    showToast("เกิดข้อผิดพลาด", "ไม่สามารถเชื่อมโยงคลาวด์เพื่ออัปเดตรหัสผ่านใหม่ได้", "error");
+                    btn.disabled = false;
+                    btn.innerText = "ยืนยันการเปลี่ยนรหัส";
+                });
+        }
+
+        // 5. ควบคุมการแสดงผล/ซ่อน ตารางข้อมูลดิบ
         function toggleTableVisibility() {
             isTableVisible = !isTableVisible;
             const tableWrapper = document.getElementById('tableWrapper');
@@ -709,7 +806,8 @@
             return parseFloat(cleanStr) || 0;
         }
 
-        // 4. ดึงข้อมูลแบบ Real-time จาก Google Sheets
+        // 6. ดึงข้อมูลแบบ Real-time จาก Google Sheets
+        // ฟังก์ชันนี้เรียกหลังจากยืนยันตัวตนสำเร็จแล้ว
         function loadRealtimeData() {
             fetch(`${WEB_APP_URL}?action=readData`)
                 .then(res => res.json())
@@ -727,7 +825,7 @@
                 });
         }
 
-        // 5. แสดงตัวเลขผลงานสรุปด่วน (KPI Cards)
+        // 7. แสดงตัวเลขสรุปด่วน (KPI Cards)
         function renderKPIs(records) {
             let totalDeliveredSum = 0;
             records.forEach(item => {
@@ -736,7 +834,7 @@
             const overallAverage = records.length > 0 ? (totalDeliveredSum / records.length).toFixed(2) : '0.00';
         }
 
-        // 6. การดึงชุดข้อมูลดิบไปกรองและแสดงผลลงตารางหลัก
+        // 8. การดึงชุดข้อมูลดิบไปกรองและแสดงผลลงตารางหลัก
         function applyFilters() {
             const fRegion = document.getElementById('filterRegion').value;
             const fBrand = document.getElementById('filterBrand').value;
@@ -781,7 +879,7 @@
             });
         }
 
-        // 7. จัดเตรียมและกรองข้อมูลสำหรับ: ตารางบทวิเคราะห์ทิศทางราคาเฉลี่ยและยุทธศาสตร์คู่แข่งรายยี่ห้อ
+        // 9. จัดเตรียมและกรองข้อมูลสำหรับ: ตารางบทวิเคราะห์ทิศทางราคาเฉลี่ยและยุทธศาสตร์คู่แข่งรายยี่ห้อ
         function applyStrategicFilters() {
             const fRegion = document.getElementById('stratFilterRegion').value;
             const fBrand = document.getElementById('stratFilterBrand').value;
@@ -857,7 +955,7 @@
             });
         }
 
-        // 8. จัดเตรียมและกรองข้อมูลสำหรับ: ตารางรายงานวิเคราะห์เปรียบเทียบราคาและการแข่งขันอิฐมวลเบา (สถาปัตยกรรม 5 มิติ)
+        // 10. จัดเตรียมและกรองข้อมูลสำหรับ: ตารางรายงานวิเคราะห์เปรียบเทียบราคาและการแข่งขันอิฐมวลเบา (Ex-work + MoM)
         function applyCompFilters() {
             const fRegion = document.getElementById('compFilterRegion').value;
             const fBrand = document.getElementById('compFilterBrand').value;
@@ -911,7 +1009,7 @@
                 return;
             }
 
-            // จัดกลุ่มตาม Region -> Brand -> Size เพื่อหาระดับราคากลางและการแข่งขันท้องถิ่น
+            // จัดกลุ่มตาม Region -> Brand -> Size เพื่อหาระดับราคา Ex-work และพิกัดแข่งขัน
             const grouped = {};
             records.forEach(item => {
                 const region = item.region || 'ไม่ระบุ';
@@ -948,7 +1046,7 @@
                 const item = grouped[key];
                 const row = document.createElement('tr');
                 
-                // ออกแบบพื้นหลัง Highlight เฉพาะ Q-con ของเราเพื่อให้ระบุความแตกต่างได้ง่ายบน Dashboard
+                // ออกแบบพื้นหลัง Highlight แบรนด์ Q-con ของเรา
                 const isOurProduct = (item.brand === "Q-con");
                 row.className = isOurProduct 
                     ? "bg-orange-50/75 hover:bg-orange-100/80 transition duration-150 font-medium border-l-4 border-orange-500" 
@@ -958,10 +1056,10 @@
                 const maxEx = item.exworkValues.length > 0 ? Math.max(...item.exworkValues) : 0;
                 const avgEx = item.exworkValues.length > 0 ? (item.exworkValues.reduce((a, b) => a + b, 0) / item.exworkValues.length) : 0;
 
-                // ดึงตำแหน่งพิกัดของโรงงาน
+                // ดึงตำแหน่งพิกัดโรงงานหลัก
                 const plantLocation = plantLocations[item.brand] || "ไม่ระบุตำแหน่งแน่ชัด";
 
-                // คำนวณ MoM % Change
+                // คำนวณ MoM % Change เทียบกับเดือนก่อนหน้า
                 const prevMonthAvg = findPreviousMonthPrice(item.region, item.brand, item.size, item.year, item.month);
                 let momChangeDisplay = "";
 
@@ -974,17 +1072,17 @@
                     } else if (diff < 0) {
                         momChangeDisplay = `<span class="text-emerald-600 font-bold"><i class="fa-solid fa-arrow-trend-down"></i> -${Math.abs(percent).toFixed(1)}%</span>`;
                     } else {
-                        momChangeDisplay = `<span class="text-slate-400">คงที่</span>`;
+                        momChangeDisplay = `<span class="text-slate-400 font-semibold">คงที่</span>`;
                     }
                 } else {
                     momChangeDisplay = `<span class="text-slate-400 italic">N/A</span>`;
                 }
 
-                // รวบรวมข้อมูลเชิงวิเคราะห์ Rebate, Promotion และ Remarks
+                // สรุปสิทธิประโยชน์ และโปรโมชัน
                 const rebateText = item.rebates.length > 0 ? [...new Set(item.rebates)].join(", ") : "ไม่มี";
                 const promoText = item.promotions.length > 0 ? [...new Set(item.promotions)].join(", ") : "ไม่มี";
                 
-                // ดึงข้อมูลเชิงลึก Remarks ทั้งหมดมาเรียงร้อยด้วยความยาวจริงโดยไม่มีการจำกัดพื้นที่
+                // ดึงข้อมูลเชิงลึก Remarks ทั้งหมดมาแสดงผลแบบเต็มความยาว (ไม่มีตัดคำ)
                 const uniqueRemarks = [...new Set(item.remarksList)];
                 const remarksDisplayHTML = uniqueRemarks.length > 0 
                     ? uniqueRemarks.map((rem, idx) => `<div class="bg-slate-100 p-2 rounded mb-1 text-slate-700 border-l border-slate-400 leading-relaxed text-[11px] font-normal font-sans shadow-sm">${idx + 1}. ${rem}</div>`).join("")
@@ -1003,7 +1101,7 @@
                     <td class="p-3 text-right font-bold text-blue-700 bg-blue-50/10">฿${maxEx.toFixed(2)}</td>
                     <td class="p-3 text-center border-r border-slate-100">${momChangeDisplay}</td>
                     <td class="p-3">
-                        <div class="text-[10px] text-slate-700"><span class="font-bold text-blue-600">Rebate:</span> ${rebateText}</div>
+                        <div class="text-[10px] text-slate-700"><span class="font-bold text-blue-600">Rebate:</span> ${rebt = rebateText}</div>
                         <div class="text-[10px] text-slate-700 mt-1"><span class="font-bold text-purple-600">Promo:</span> ${promoText}</div>
                     </td>
                     <td class="p-3 whitespace-normal align-top font-sans">
@@ -1016,7 +1114,7 @@
             });
         }
 
-        // 9. ฟังก์ชันจัดการเปิดโหมดแก้ไขข้อมูล (Inline Edit Mode)
+        // 11. ฟังก์ชันจัดการเปิดโหมดแก้ไขข้อมูล (Inline Edit Mode)
         function activateEditMode(index) {
             isEditMode = true;
             const record = globalRawData[index];
@@ -1033,7 +1131,7 @@
             document.getElementById('promotion').value = record.promotion === "ไม่มีโปรโมชัน" ? "" : record.promotion;
             document.getElementById('remarks').value = record.remarks || "";
 
-            // ปรับแต่ง UI ของ Form
+            // ปรับแต่ง UI ของ Form ด้านซ้าย
             document.getElementById('formTitle').innerText = "แก้ไขข้อมูล";
             document.getElementById('formIcon').className = "fa-solid fa-edit text-amber-500 text-lg";
             document.getElementById('btnSubmitText').innerText = "บันทึกการปรับปรุงข้อมูล";
@@ -1045,7 +1143,7 @@
             showToast("สลับเข้าสู่โหมดแก้ไขแล้ว", "สามารถปรับแต่งข้อมูลในช่องทางซ้ายมือ และกดยืนยันบันทึกเพื่ออัปเดตข้อมูล", "success");
         }
 
-        // 10. ยกเลิกโหมดแก้ไขข้อมูล
+        // 12. ยกเลิกโหมดแก้ไขข้อมูล
         function cancelEditMode() {
             isEditMode = false;
             document.getElementById('priceForm').reset();
@@ -1058,7 +1156,7 @@
             document.getElementById('btnCancelEdit').classList.add('hidden');
         }
 
-        // 11. ฟังก์ชันส่งออกตารางข้อมูลหน้าเว็บเป็น Excel (.xlsx) ด้วย SheetJS
+        // 13. ฟังก์ชันส่งออกตารางหน้าเว็บเป็น Excel (.xlsx) ด้วย SheetJS
         function exportTableToExcel(tableID, filename = 'competitor-report') {
             const table = document.getElementById(tableID);
             const wb = XLSX.utils.table_to_book(table, { sheet: "Analysis Sheet" });
@@ -1066,7 +1164,7 @@
             showToast("ส่งออกสำเร็จ!", "ดาวน์โหลดไฟล์ตารางวิเคราะห์ในรูปแบบ Excel เรียบร้อยแล้ว", "success");
         }
 
-        // 12. อัปเดตข้อมูล และอัปโหลดไปยัง Google Sheets
+        // 14. อัปเดตข้อมูลราคา และอัปโหลดไปยัง Google Sheets
         function saveData(event) {
             event.preventDefault();
             const btn = document.getElementById('btnSubmitPrice');
@@ -1099,7 +1197,7 @@
             .then(() => {
                 showToast("อัปโหลดสำเร็จ!", "ระบบบันทึกพิกัดและข้อมูลเชิงวิเคราะห์ของแบรนด์เรียบร้อยแล้ว", "success");
                 cancelEditMode();
-                setTimeout(loadRealtimeData, 1500); // ทำการดึงฐานข้อมูลมาอัปเดตตารางสรุปทันทีแบบ Real-time
+                setTimeout(loadRealtimeData, 1500); // ทำการดึงฐานข้อมูลมาอัปเดตตารางสรุปใหม่ทันทีแบบ Real-time
             })
             .catch(err => {
                 showToast("บันทึกล้มเหลว", "กรุณาตรวจสอบเครือข่ายอินเทอร์เน็ต", "error");
@@ -1108,7 +1206,7 @@
             });
         }
 
-        // 13. แสดงผลกล่องข้อความแจ้งเตือน Toast
+        // 15. แสดงผลกล่องข้อความแจ้งเตือน Toast
         function showToast(title, message, type = "success") {
             const toast = document.getElementById('toast');
             const toastIcon = document.getElementById('toastIcon');
