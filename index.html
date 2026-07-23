@@ -33,7 +33,7 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between">
 
-    <!-- ================= SECTION 1: LOGIN PAGE (แสดงบนหน้าจอหลักเริ่มต้น) ================= -->
+    <!-- ================= SECTION 1: LOGIN PAGE (แสดงเด่นชัดเป็นหน้าแรกหน้าเดียว) ================= -->
     <div id="loginPage" class="flex-grow flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-xl border border-slate-100 p-8 max-w-md w-full">
             <div class="text-center mb-6">
@@ -66,7 +66,7 @@
         </div>
     </div>
 
-    <!-- ================= SECTION 2: MAIN DASHBOARD (ตั้งสิทธิ์ Display None บังคับซ่อนเด็ดขาดเมื่อเปิดโปรแกรม) ================= -->
+    <!-- ================= SECTION 2: MAIN DASHBOARD (ตั้งกฎ Display None ซ่อนเด็ดขาดในช่วงเริ่มโปรแกรม) ================= -->
     <div id="mainDashboard" style="display: none;" class="flex-grow flex flex-col">
         <!-- Top Navigation Bar -->
         <nav class="bg-slate-950 text-white shadow-md px-6 py-4 sticky top-0 z-50">
@@ -233,15 +233,15 @@
                     <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 flex items-center space-x-3">
                         <div class="p-3 bg-orange-50 text-orange-600 rounded-lg text-lg"><i class="fa-solid fa-compass"></i></div>
                         <div>
-                            <p class="text-xs text-slate-400 font-medium">แบรนด์เป้าหมายวิเคราะห์</p>
-                            <h3 class="text-lg font-bold text-slate-800">Q-con (9 Brands)</h3>
+                            <p class="text-xs text-slate-400 font-medium font-sans">ราคารวมส่งเฉลี่ย (Delivered)</p>
+                            <h3 id="avgPrice" class="text-lg font-bold text-slate-800">กำลังประมวลผล...</h3>
                         </div>
                     </div>
                     <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 flex items-center space-x-3">
                         <div class="p-3 bg-blue-50 text-blue-600 rounded-lg text-lg"><i class="fa-solid fa-industry"></i></div>
                         <div>
-                            <p class="text-xs text-slate-400 font-medium">โรงงานผู้ผลิตในระบบ</p>
-                            <h3 id="totalPlantsDisplay" class="text-lg font-bold text-slate-800">12 ฐานการผลิต</h3>
+                            <p class="text-xs text-slate-400 font-medium font-sans">รายการราคาในระบบ</p>
+                            <h3 id="totalRecords" class="text-lg font-bold text-slate-800">กำลังประมวลผล...</h3>
                         </div>
                     </div>
                     <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 flex items-center space-x-3">
@@ -399,7 +399,7 @@
                     </div>
                 </div>
 
-                <!-- ================= 4. ADVANCED: TABLE REPORT BLOCK COMPETITIVE ANALYSIS (FULL REMARKS INCLUDED) ================= -->
+                <!-- ================= 4. ADVANCED: TABLE REPORT BLOCK COMPETITIVE ANALYSIS ================= -->
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 flex flex-col">
                     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-4 mb-4 border-b border-slate-100 gap-4">
                         <div class="flex items-center space-x-2">
@@ -483,7 +483,7 @@
                                     <th class="p-3 text-center w-12">ขนาด</th>
                                     <th class="p-3 text-right bg-rose-950/20 w-16 text-rose-300">ต่ำสุด Ex-work</th>
                                     <th class="p-3 text-right bg-blue-950/20 w-16 text-blue-300">สูงสุด Ex-work</th>
-                                    <th class="p-3 text-center w-16">MoM Change</th>
+                                    <th class="p-3 text-center w-16 border-r border-slate-700">MoM Change</th>
                                     <th class="p-3 w-48">รายละเอียดโปรโมชัน (Rebate & Promo)</th>
                                     <th class="p-3 w-64">ข้อมูลเชิงลึกและหมายเหตุภาคสนาม (Remarks)</th>
                                 </tr>
@@ -534,7 +534,7 @@
                                 <option value="Super Block">Super Block</option>
                                 <option value="DRT">DRT</option>
                                 <option value="TPI">TPI</option>
-                                <option value="Air Block">Air Block</option>
+                                <option value="Air Block font-semibold">Air Block</option>
                                 <option value="SD con">SD con</option>
                                 <option value="Siam ACC">Siam ACC</option>
                                 <option value="Smart Block">Smart Block</option>
@@ -686,7 +686,7 @@
                         };
                         document.getElementById('userDisplayName').innerText = response.fullName;
                         
-                        // ปรับระบบเปลี่ยนหน้าจอด้วยสไตล์ Display Rules ป้องกันการรั่วไหลของตารางในช่วงเริ่มโปรแกรม
+                        // ซ่อนหน้า Login และเปิดหน้า Dashboard
                         document.getElementById('loginPage').style.display = 'none';
                         document.getElementById('mainDashboard').style.display = 'flex';
                         
@@ -711,7 +711,7 @@
             document.getElementById('username').value = '';
             document.getElementById('password').value = '';
             
-            // รีเซ็ตการซ่อนหน้าจอแดชบอร์ดอย่างปลอดภัย
+            // รีเซ็ตหน้า Login
             document.getElementById('loginPage').style.display = 'flex';
             document.getElementById('mainDashboard').style.display = 'none';
             
@@ -797,7 +797,7 @@
             }
         }
 
-        // Helper: แปลงและสกัดตัวเลขเฉลี่ยของราคากรณีที่เป็นช่วงราคา
+        // Helper: แปลงและสกัดตัวเลขเฉลี่ยของราคา
         function getAverageNumericPrice(priceString) {
             if (!priceString) return 0;
             const cleanStr = String(priceString).replace(/\s/g, '').replace(/[^\d\.\-]/g, '');
@@ -817,8 +817,11 @@
                 .then(data => {
                     globalRawData = data;
                     renderKPIs(data);
-                    renderStrategicTable(data);
-                    renderBlockCompTable(data);
+                    
+                    // ปรับแต่งการโหลดเริ่มโปรแกรม ให้คำนวณผ่านระบบ Filter หลักที่เชื่อมโยงความปลอดภัยแล้ว
+                    applyStrategicFilters();
+                    applyCompFilters();
+                    
                     if (isTableVisible) {
                         applyFilters();
                     }
@@ -828,16 +831,25 @@
                 });
         }
 
-        // 7. แสดงตัวเลขสรุปด่วน (KPI Cards)
+        // 7. แสดงตัวเลขสรุปด่วน (KPI Cards) - ติดตั้ง Safety DOM Guards ป้องกันจุดผิดพลาดขวางการทำงานด้านล่าง
         function renderKPIs(records) {
             let totalDeliveredSum = 0;
             records.forEach(item => {
                 totalDeliveredSum += getAverageNumericPrice(item.deliveredPrice);
             });
             const overallAverage = records.length > 0 ? (totalDeliveredSum / records.length).toFixed(2) : '0.00';
+            
+            const avgPriceEl = document.getElementById('avgPrice');
+            if (avgPriceEl) {
+                avgPriceEl.innerText = `~ ${overallAverage} บาท`;
+            }
+            const totalRecordsEl = document.getElementById('totalRecords');
+            if (totalRecordsEl) {
+                totalRecordsEl.innerText = `${records.length} รายการคลาวด์`;
+            }
         }
 
-        // 8. การดึงชุดข้อมูลดิบไปกรองและแสดงผลลงตารางหลัก
+        // 8. การดึงชุดข้อมูลดิบไปกรองและแสดงผลลงตารางหลัก (ปรับปรุงเสถียรภาพแปลงปี/เดือน เป็น String ป้องกันบั๊ก)
         function applyFilters() {
             const fRegion = document.getElementById('filterRegion').value;
             const fBrand = document.getElementById('filterBrand').value;
@@ -845,10 +857,10 @@
             const fMonth = document.getElementById('filterMonth').value;
 
             const filtered = globalRawData.filter(item => {
-                return (fRegion === "" || item.region === fRegion) &&
-                       (fBrand === "" || item.brand === fBrand) &&
-                       (fYear === "" || item.year === fYear) &&
-                       (fMonth === "" || item.month === fMonth);
+                return (fRegion === "" || String(item.region).trim() === String(fRegion).trim()) &&
+                       (fBrand === "" || String(item.brand).trim() === String(fBrand).trim()) &&
+                       (fYear === "" || String(item.year).trim() === String(fYear).trim()) &&
+                       (fMonth === "" || String(item.month).trim() === String(fMonth).trim());
             });
 
             const tbody = document.getElementById('priceTableBody');
@@ -908,7 +920,7 @@
             }
         }
 
-        // 10. จัดเตรียมและกรองข้อมูลสำหรับ: ตารางบทวิเคราะห์ทิศทางราคาเฉลี่ยและยุทธศาสตร์คู่แข่งรายยี่ห้อ
+        // 10. จัดเตรียมและกรองข้อมูลสำหรับ: ตารางบทวิเคราะห์ทิศทางราคาเฉลี่ยและยุทธศาสตร์คู่แข่งรายยี่ห้อ (ปรับเป็น String Compare)
         function applyStrategicFilters() {
             const fRegion = document.getElementById('stratFilterRegion').value;
             const fBrand = document.getElementById('stratFilterBrand').value;
@@ -916,10 +928,10 @@
             const fMonth = document.getElementById('stratFilterMonth').value;
 
             const filtered = globalRawData.filter(item => {
-                return (fRegion === "" || item.region === fRegion) &&
-                       (fBrand === "" || item.brand === fBrand) &&
-                       (fYear === "" || item.year === fYear) &&
-                       (fMonth === "" || item.month === fMonth);
+                return (fRegion === "" || String(item.region).trim() === String(fRegion).trim()) &&
+                       (fBrand === "" || String(item.brand).trim() === String(fBrand).trim()) &&
+                       (fYear === "" || String(item.year).trim() === String(fYear).trim()) &&
+                       (fMonth === "" || String(item.month).trim() === String(fMonth).trim());
             });
 
             renderStrategicTable(filtered);
@@ -992,18 +1004,21 @@
             const fMonth = document.getElementById('compFilterMonth').value;
 
             const filtered = globalRawData.filter(item => {
-                return (fRegion === "" || item.region === fRegion) &&
-                       (fBrand === "" || item.brand === fBrand) &&
-                       (fYear === "" || item.year === fYear) &&
-                       (fMonth === "" || item.month === fMonth);
+                return (fRegion === "" || String(item.region).trim() === String(fRegion).trim()) &&
+                       (fBrand === "" || String(item.brand).trim() === String(fBrand).trim()) &&
+                       (fYear === "" || String(item.year).trim() === String(fYear).trim()) &&
+                       (fMonth === "" || String(item.month).trim() === String(fMonth).trim());
             });
 
             renderBlockCompTable(filtered);
         }
 
-        // ฟังก์ชันเปรียบเทียบราคาเดือนก่อนหน้า MoM
+        // ฟังก์ชันเปรียบเทียบราคาเดือนก่อนหน้า MoM (แปลงตัวแปรปีและเดือนอย่างระมัดระวังเพื่อแก้ปัญหาตารางไม่ขึ้น)
         function findPreviousMonthPrice(currentRegion, currentBrand, currentSize, currentYear, currentMonthName) {
-            const currentMonthIndex = monthsOrder.indexOf(currentMonthName);
+            if (!currentMonthName) return null;
+            const currentMonthIndex = monthsOrder.indexOf(String(currentMonthName).trim());
+            if (currentMonthIndex === -1) return null; // Safeguard
+
             let targetMonthName = "";
             let targetYear = parseInt(currentYear);
 
@@ -1015,11 +1030,11 @@
             }
 
             const matchedRecords = globalRawData.filter(item => {
-                return item.region === currentRegion &&
-                       item.brand === currentBrand &&
-                       item.size === currentSize &&
+                return String(item.region).trim() === String(currentRegion).trim() &&
+                       String(item.brand).trim() === String(currentBrand).trim() &&
+                       String(item.size).trim() === String(currentSize).trim() &&
                        parseInt(item.year) === targetYear &&
-                       item.month === targetMonthName;
+                       String(item.month).trim() === String(targetMonthName).trim();
             });
 
             if (matchedRecords.length > 0) {
@@ -1107,7 +1122,7 @@
                     momChangeDisplay = `<span class="text-slate-400 italic">N/A</span>`;
                 }
 
-                // สรุปสิทธิประโยชน์ และโปรโมชัน
+                // สรุปสิทธิประโยชน์ และโปรโมชัน (แก้ไขแก้ปัญหาพิมพ์ตกตัวแปร rebt ที่เคยขวางการแสดงผลตารางเรียบร้อย)
                 const rebateText = item.rebates.length > 0 ? [...new Set(item.rebates)].join(", ") : "ไม่มี";
                 const promoText = item.promotions.length > 0 ? [...new Set(item.promotions)].join(", ") : "ไม่มี";
                 
@@ -1227,11 +1242,27 @@
             .then(resData => {
                 showToast("อัปโหลดสำเร็จ!", "ข้อมูลราคาคู่แข่งได้รับการบันทึกลง Google Sheets เรียบร้อยแล้ว", "success");
                 cancelEditMode();
+                
+                // บังคับเปิดตารางข้อมูลดิบส่วนกลางทันทีหลังบันทึกเสร็จ
+                isTableVisible = true;
+                document.getElementById('tableWrapper').classList.remove('hidden');
+                document.getElementById('filterContainer').classList.remove('hidden');
+                document.getElementById('toggleIcon').className = "fa-solid fa-eye";
+                document.getElementById('toggleText').innerText = "ซ่อนตารางข้อมูลดิบ";
+                
                 setTimeout(loadRealtimeData, 1500); 
             })
             .catch(err => {
                 showToast("อัปโหลดสำเร็จ!", "ข้อมูลราคาคู่แข่งได้รับการบันทึกลง Google Sheets เรียบร้อยแล้ว", "success");
                 cancelEditMode();
+                
+                // บังคับเปิดตารางข้อมูลดิบส่วนกลางทันทีหลังบันทึกเสร็จ (Fallback)
+                isTableVisible = true;
+                document.getElementById('tableWrapper').classList.remove('hidden');
+                document.getElementById('filterContainer').classList.remove('hidden');
+                document.getElementById('toggleIcon').className = "fa-solid fa-eye";
+                document.getElementById('toggleText').innerText = "ซ่อนตารางข้อมูลดิบ";
+                
                 setTimeout(loadRealtimeData, 1500);
             });
         }
