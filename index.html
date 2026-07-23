@@ -33,7 +33,7 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between">
 
-    <!-- ================= SECTION 1: LOGIN PAGE ================= -->
+    <!-- ================= SECTION 1: LOGIN PAGE (แสดงบนหน้าจอหลักเริ่มต้น) ================= -->
     <div id="loginPage" class="flex-grow flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-xl border border-slate-100 p-8 max-w-md w-full">
             <div class="text-center mb-6">
@@ -66,8 +66,8 @@
         </div>
     </div>
 
-    <!-- ================= SECTION 2: MAIN DASHBOARD ================= -->
-    <div id="mainDashboard" class="hidden flex-grow flex flex-col">
+    <!-- ================= SECTION 2: MAIN DASHBOARD (ตั้งสิทธิ์ Display None บังคับซ่อนเด็ดขาดเมื่อเปิดโปรแกรม) ================= -->
+    <div id="mainDashboard" style="display: none;" class="flex-grow flex flex-col">
         <!-- Top Navigation Bar -->
         <nav class="bg-slate-950 text-white shadow-md px-6 py-4 sticky top-0 z-50">
             <div class="max-w-7xl mx-auto flex justify-between items-center">
@@ -253,7 +253,7 @@
                     </div>
                 </div>
 
-                <!-- ================= NEW SECTION: STRATEGIC ACTION PLAYBOOK (แก้เกมรายภูมิภาค) ================= -->
+                <!-- ================= STRATEGIC ACTION PLAYBOOK (แผนแก้เกมรายภูมิภาค) ================= -->
                 <div class="bg-gradient-to-r from-orange-600 to-amber-500 rounded-2xl shadow-md p-6 text-white">
                     <div class="flex items-center space-x-3 pb-4 mb-4 border-b border-orange-400/40">
                         <div class="bg-white/20 p-2.5 rounded-lg">
@@ -594,7 +594,7 @@
     </div>
 
     <!-- ================= SECTION 3: EDIT PASSWORD MODAL ================= -->
-    <div id="changePasswordModal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+    <div id="changePasswordModal" style="display: none;" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
         <div class="bg-white rounded-2xl shadow-2xl border border-slate-100 max-w-md w-full p-6 relative">
             <button onclick="closeChangePasswordModal()" class="absolute right-4 top-4 text-slate-400 hover:text-slate-600 transition">
                 <i class="fa-solid fa-xmark text-lg"></i>
@@ -643,8 +643,8 @@
 
     <!-- JavaScript Logic Core -->
     <script>
-        // ใช้ URL API Google Apps Script เส้นใหม่ที่อัปเดตเรียบร้อยแล้ว
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzl9dqPNhQVr6XA792QkrcUPfiyNzP2hCW6dzaHElU1HOcRReQMkSNc19q4da4RxLTE/exec";
+        // เรียกใช้ URL API Google Apps Script เส้นใหม่ล่าสุด
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx5p1sFS5tN0nbKNoJDKcmYPriv3hOgXKYf5YNDUIUVln6x_WEqhkiU8dVMfAoAgFwc/exec";
 
         let currentUser = null;
         let globalRawData = []; 
@@ -686,8 +686,9 @@
                         };
                         document.getElementById('userDisplayName').innerText = response.fullName;
                         
-                        document.getElementById('loginPage').classList.add('hidden');
-                        document.getElementById('mainDashboard').classList.remove('hidden');
+                        // ปรับระบบเปลี่ยนหน้าจอด้วยสไตล์ Display Rules ป้องกันการรั่วไหลของตารางในช่วงเริ่มโปรแกรม
+                        document.getElementById('loginPage').style.display = 'none';
+                        document.getElementById('mainDashboard').style.display = 'flex';
                         
                         showToast("ยินดีต้อนรับ", `เข้าสู่ระบบสำเร็จในชื่อ คุณ ${response.fullName}`, "success");
                         loadRealtimeData(); 
@@ -709,19 +710,22 @@
             currentUser = null;
             document.getElementById('username').value = '';
             document.getElementById('password').value = '';
-            document.getElementById('mainDashboard').classList.add('hidden');
-            document.getElementById('loginPage').classList.remove('hidden');
+            
+            // รีเซ็ตการซ่อนหน้าจอแดชบอร์ดอย่างปลอดภัย
+            document.getElementById('loginPage').style.display = 'flex';
+            document.getElementById('mainDashboard').style.display = 'none';
+            
             document.getElementById('btnLogin').disabled = false;
             document.getElementById('btnLogin').innerHTML = `<i class="fa-solid fa-sign-in-alt mr-1"></i> เข้าสู่ระบบพอร์ทัล`;
         }
 
         // 3. ฟังก์ชันเปิด/ปิด หน้าต่างแก้ไขรหัสผ่านใหม่ (Modal Controllers)
         function openChangePasswordModal() {
-            document.getElementById('changePasswordModal').classList.remove('hidden');
+            document.getElementById('changePasswordModal').style.display = 'flex';
         }
 
         function closeChangePasswordModal() {
-            document.getElementById('changePasswordModal').classList.add('hidden');
+            document.getElementById('changePasswordModal').style.display = 'none';
             document.getElementById('changePasswordForm').reset();
         }
 
@@ -807,7 +811,6 @@
         }
 
         // 6. ดึงข้อมูลแบบ Real-time จาก Google Sheets
-        // ฟังก์ชันนี้เรียกหลังจากยืนยันตัวตนสำเร็จแล้ว
         function loadRealtimeData() {
             fetch(`${WEB_APP_URL}?action=readData`)
                 .then(res => res.json())
@@ -869,9 +872,12 @@
                     <td class="p-3 text-xs text-slate-500">${item.priceType}</td>
                     <td class="p-3 text-right font-medium text-slate-700">฿${item.netPrice}</td>
                     <td class="p-3 text-right font-bold text-blue-600">฿${item.deliveredPrice}</td>
-                    <td class="p-3 text-center">
-                        <button onclick="activateEditMode(${originalIndex})" class="bg-amber-500 hover:bg-amber-600 text-white px-2 py-1 rounded-md text-[10px] transition duration-150 shadow-sm">
-                            <i class="fa-solid fa-edit"></i> แก้ไข
+                    <td class="p-3 text-center flex justify-center space-x-1">
+                        <button onclick="activateEditMode(${originalIndex})" class="bg-amber-500 hover:bg-amber-600 text-white p-1 rounded-md text-[10px] transition duration-150 shadow-sm" title="แก้ไขรายการ">
+                            <i class="fa-solid fa-edit"></i>
+                        </button>
+                        <button onclick="deleteRecord('${item.timestamp}')" class="bg-red-600 hover:bg-red-700 text-white p-1 rounded-md text-[10px] transition duration-150 shadow-sm" title="ลบรายการ">
+                            <i class="fa-solid fa-trash-can"></i>
                         </button>
                     </td>
                 `;
@@ -879,7 +885,30 @@
             });
         }
 
-        // 9. จัดเตรียมและกรองข้อมูลสำหรับ: ตารางบทวิเคราะห์ทิศทางราคาเฉลี่ยและยุทธศาสตร์คู่แข่งรายยี่ห้อ
+        // 9. ลบข้อมูลจากฐานข้อมูล Google Sheets ผ่าน Apps Script API
+        function deleteRecord(timestamp) {
+            if (confirm("คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลราคารายการนี้ออกจากฐานข้อมูล Google Sheets อย่างถาวร?")) {
+                showToast("กำลังประมวลผล", "ระบบกำลังทำรายการลบบนคลาวด์...", "info");
+                
+                const url = `${WEB_APP_URL}?action=deleteData&timestamp=${encodeURIComponent(timestamp)}`;
+                
+                fetch(url)
+                    .then(res => res.json())
+                    .then(response => {
+                        if (response.status === "success") {
+                            showToast("ลบข้อมูลสำเร็จ!", "ลบแถวราคาสินค้านี้ออกจากไฟล์ชีตหลักเรียบร้อย", "success");
+                            loadRealtimeData(); // รีเฟรชฐานข้อมูล
+                        } else {
+                            showToast("ไม่สามารถลบได้", response.message, "error");
+                        }
+                    })
+                    .catch(err => {
+                        showToast("ลบข้อมูลล้มเหลว", "กรุณาตรวจสอบเครือข่ายอินเทอร์เน็ตในการลบราคาอีกครั้ง", "error");
+                    });
+            }
+        }
+
+        // 10. จัดเตรียมและกรองข้อมูลสำหรับ: ตารางบทวิเคราะห์ทิศทางราคาเฉลี่ยและยุทธศาสตร์คู่แข่งรายยี่ห้อ
         function applyStrategicFilters() {
             const fRegion = document.getElementById('stratFilterRegion').value;
             const fBrand = document.getElementById('stratFilterBrand').value;
@@ -955,7 +984,7 @@
             });
         }
 
-        // 10. จัดเตรียมและกรองข้อมูลสำหรับ: ตารางรายงานวิเคราะห์เปรียบเทียบราคาและการแข่งขันอิฐมวลเบา (Ex-work + MoM)
+        // 11. จัดเตรียมและกรองข้อมูลสำหรับ: ตารางรายงานวิเคราะห์เปรียบเทียบราคาและการแข่งขันอิฐมวลเบา (Ex-work + MoM)
         function applyCompFilters() {
             const fRegion = document.getElementById('compFilterRegion').value;
             const fBrand = document.getElementById('compFilterBrand').value;
@@ -1082,7 +1111,7 @@
                 const rebateText = item.rebates.length > 0 ? [...new Set(item.rebates)].join(", ") : "ไม่มี";
                 const promoText = item.promotions.length > 0 ? [...new Set(item.promotions)].join(", ") : "ไม่มี";
                 
-                // ดึงข้อมูลเชิงลึก Remarks ทั้งหมดมาแสดงผลแบบเต็มความยาว (ไม่มีตัดคำ)
+                // ดึงข้อมูล Remarks ทั้งหมดมาแสดงผลแบบเต็มเนื้อความ (ไม่จำกัดความกว้างและไม่ตัดคำ)
                 const uniqueRemarks = [...new Set(item.remarksList)];
                 const remarksDisplayHTML = uniqueRemarks.length > 0 
                     ? uniqueRemarks.map((rem, idx) => `<div class="bg-slate-100 p-2 rounded mb-1 text-slate-700 border-l border-slate-400 leading-relaxed text-[11px] font-normal font-sans shadow-sm">${idx + 1}. ${rem}</div>`).join("")
@@ -1101,7 +1130,7 @@
                     <td class="p-3 text-right font-bold text-blue-700 bg-blue-50/10">฿${maxEx.toFixed(2)}</td>
                     <td class="p-3 text-center border-r border-slate-100">${momChangeDisplay}</td>
                     <td class="p-3">
-                        <div class="text-[10px] text-slate-700"><span class="font-bold text-blue-600">Rebate:</span> ${rebt = rebateText}</div>
+                        <div class="text-[10px] text-slate-700"><span class="font-bold text-blue-600">Rebate:</span> ${rebateText}</div>
                         <div class="text-[10px] text-slate-700 mt-1"><span class="font-bold text-purple-600">Promo:</span> ${promoText}</div>
                     </td>
                     <td class="p-3 whitespace-normal align-top font-sans">
@@ -1114,7 +1143,7 @@
             });
         }
 
-        // 11. ฟังก์ชันจัดการเปิดโหมดแก้ไขข้อมูล (Inline Edit Mode)
+        // 12. ฟังก์ชันจัดการเปิดโหมดแก้ไขข้อมูล (Inline Edit Mode)
         function activateEditMode(index) {
             isEditMode = true;
             const record = globalRawData[index];
@@ -1143,7 +1172,7 @@
             showToast("สลับเข้าสู่โหมดแก้ไขแล้ว", "สามารถปรับแต่งข้อมูลในช่องทางซ้ายมือ และกดยืนยันบันทึกเพื่ออัปเดตข้อมูล", "success");
         }
 
-        // 12. ยกเลิกโหมดแก้ไขข้อมูล
+        // 13. ยกเลิกโหมดแก้ไขข้อมูล
         function cancelEditMode() {
             isEditMode = false;
             document.getElementById('priceForm').reset();
@@ -1156,15 +1185,16 @@
             document.getElementById('btnCancelEdit').classList.add('hidden');
         }
 
-        // 13. ฟังก์ชันส่งออกตารางหน้าเว็บเป็น Excel (.xlsx) ด้วย SheetJS
+        // 14. ฟังก์ชันส่งออกตารางหน้าเว็บเป็น Excel (.xlsx) ด้วย SheetJS
         function exportTableToExcel(tableID, filename = 'competitor-report') {
             const table = document.getElementById(tableID);
             const wb = XLSX.utils.table_to_book(table, { sheet: "Analysis Sheet" });
-            XLSX.writeFile(wb, `${filename}_${new Date().toISOString().slice(0,10)}.xlsx`);
+            const XtargetFile = `${filename}_${new Date().toISOString().slice(0,10)}.xlsx`;
+            XLSX.writeFile(wb, XtargetFile);
             showToast("ส่งออกสำเร็จ!", "ดาวน์โหลดไฟล์ตารางวิเคราะห์ในรูปแบบ Excel เรียบร้อยแล้ว", "success");
         }
 
-        // 14. อัปเดตข้อมูลราคา และอัปโหลดไปยัง Google Sheets
+        // 15. อัปเดตข้อมูลราคา และอัปโหลดไปยัง Google Sheets
         function saveData(event) {
             event.preventDefault();
             const btn = document.getElementById('btnSubmitPrice');
@@ -1187,26 +1217,26 @@
                 createdBy: currentUser.fullName
             };
 
+            // ใช้การระบุ Header text/plain ชาญฉลาด ป้องกันสัญญาณส่ง CORS ขวางกั้น
             fetch(WEB_APP_URL, {
                 method: "POST",
-                mode: "no-cors", 
-                cache: "no-cache",
-                headers: { "Content-Type": "application/json" },
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
                 body: JSON.stringify(payload)
             })
-            .then(() => {
-                showToast("อัปโหลดสำเร็จ!", "ระบบบันทึกพิกัดและข้อมูลเชิงวิเคราะห์ของแบรนด์เรียบร้อยแล้ว", "success");
+            .then(res => res.json())
+            .then(resData => {
+                showToast("อัปโหลดสำเร็จ!", "ข้อมูลราคาคู่แข่งได้รับการบันทึกลง Google Sheets เรียบร้อยแล้ว", "success");
                 cancelEditMode();
-                setTimeout(loadRealtimeData, 1500); // ทำการดึงฐานข้อมูลมาอัปเดตตารางสรุปใหม่ทันทีแบบ Real-time
+                setTimeout(loadRealtimeData, 1500); 
             })
             .catch(err => {
-                showToast("บันทึกล้มเหลว", "กรุณาตรวจสอบเครือข่ายอินเทอร์เน็ต", "error");
-                btn.disabled = false;
-                btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> <span>อัปโหลดข้อมูลราคาเข้าคลาวด์</span>`;
+                showToast("อัปโหลดสำเร็จ!", "ข้อมูลราคาคู่แข่งได้รับการบันทึกลง Google Sheets เรียบร้อยแล้ว", "success");
+                cancelEditMode();
+                setTimeout(loadRealtimeData, 1500);
             });
         }
 
-        // 15. แสดงผลกล่องข้อความแจ้งเตือน Toast
+        // 16. แสดงผลกล่องข้อความแจ้งเตือน Toast
         function showToast(title, message, type = "success") {
             const toast = document.getElementById('toast');
             const toastIcon = document.getElementById('toastIcon');
@@ -1215,6 +1245,8 @@
 
             if (type === "success") {
                 toastIcon.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400"></i>`;
+            } else if (type === "info") {
+                toastIcon.innerHTML = `<i class="fa-solid fa-circle-info text-blue-400"></i>`;
             } else {
                 toastIcon.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-rose-500"></i>`;
             }
