@@ -67,10 +67,10 @@
     </div>
 
     <!-- ================= SECTION 2: MAIN DASHBOARD (ตั้งกฎ Display None ซ่อนเด็ดขาดในช่วงเริ่มโปรแกรม) ================= -->
-    <div id="mainDashboard" style="display: none;" class="flex-grow flex flex-col">
-        <!-- Top Navigation Bar -->
+    <div id="mainDashboard" style="display: none;" class="flex-grow flex flex-col animate-fadeIn">
+        <!-- Top Navigation Bar (ขยายความกว้างเต็มพิกัด 1600px เพื่อความสมดุล) -->
         <nav class="bg-slate-950 text-white shadow-md px-6 py-4 sticky top-0 z-50">
-            <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="max-w-[1600px] mx-auto flex justify-between items-center">
                 <div class="flex items-center space-x-3">
                     <div class="bg-orange-600 p-2.5 rounded-lg text-white">
                         <i class="fa-solid fa-cubes text-xl"></i>
@@ -95,248 +95,69 @@
             </div>
         </nav>
 
-        <!-- Main Content Grid -->
-        <main class="flex-grow max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Main Content Area (ขยายความกว้างรวมเป็น 1600px) -->
+        <main class="flex-grow max-w-[1600px] w-full mx-auto p-4 md:p-6 space-y-6">
             
-            <!-- Left Column: Data Input & Edit Form -->
-            <section class="lg:col-span-1 bg-white rounded-2xl shadow-sm border border-slate-100 p-6 self-start sticky top-24">
-                <div class="flex items-center justify-between pb-4 mb-6 border-b border-slate-100">
-                    <div class="flex items-center space-x-2">
-                        <i id="formIcon" class="fa-solid fa-pen-to-square text-orange-600 text-lg"></i>
-                        <h2 id="formTitle" class="text-lg font-bold text-slate-800">บันทึกข้อมูลราคาใหม่</h2>
-                    </div>
-                    <span id="editIndicator" class="hidden text-xs bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded-full">โหมดแก้ไข</span>
-                </div>
-
-                <form id="priceForm" class="space-y-4" onsubmit="saveData(event)">
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">ปีที่บันทึก (Year) <span class="text-red-500">*</span></label>
-                            <select id="year" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-blue-500">
-                                <option value="2026">2026</option>
-                                <option value="2025">2025</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">เดือน (Month) <span class="text-red-500">*</span></label>
-                            <select id="month" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-blue-500">
-                                <option value="มกราคม">มกราคม</option>
-                                <option value="กุมภาพันธ์">กุมภาพันธ์</option>
-                                <option value="มีนาคม">มีนาคม</option>
-                                <option value="เมษายน">เมษายน</option>
-                                <option value="พฤษภาคม">พฤษภาคม</option>
-                                <option value="มิถุนายน">มิถุนายน</option>
-                                <option value="กรกฎาคม" selected>กรกฎาคม</option>
-                                <option value="สิงหาคม">สิงหาคม</option>
-                                <option value="กันยายน">กันยายน</option>
-                                <option value="ตุลาคม">ตุลาคม</option>
-                                <option value="พฤศจิกายน">พฤศจิกายน</option>
-                                <option value="ธันวาคม">ธันวาคม</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">ภูมิภาคพื้นที่สำรวจ (Region) <span class="text-red-500">*</span></label>
-                        <select id="region" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-blue-500">
-                            <option value="">-- เลือกภูมิภาค --</option>
-                            <option value="Metro">Metro (กรุงเทพฯ/ปริมณฑล)</option>
-                            <option value="East">East (ตะวันออก)</option>
-                            <option value="West">West (ตะวันตก)</option>
-                            <option value="E-san">E-san (ตะวันออกเฉียงเหนือ)</option>
-                            <option value="North-Lower">North-Lower (เหนือตอนล่าง)</option>
-                            <option value="North-Upper">North-Upper (เหนือตอนบน)</option>
-                            <option value="South">South (ใต้)</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">แบรนด์สินค้าที่พบ (Brand) <span class="text-red-500">*</span></label>
-                        <select id="brand" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-blue-500">
-                            <option value="">-- เลือกแบรนด์คู่แข่ง --</option>
-                            <option value="Q-con">Q-con (สินค้าของเรา)</option>
-                            <option value="Thai con">Thai con</option>
-                            <option value="Super Block">Super Block</option>
-                            <option value="DRT">DRT</option>
-                            <option value="TPI">TPI</option>
-                            <option value="Air Block">Air Block</option>
-                            <option value="SD con">SD con</option>
-                            <option value="Siam ACC">Siam ACC</option>
-                            <option value="Smart Block">Smart Block</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">ความหนาอิฐมวลเบา (Size) <span class="text-red-500">*</span></label>
-                        <select id="size" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-blue-500">
-                            <option value="">-- เลือกขนาดความหนา --</option>
-                            <option value="7 ซม.">7 ซม.</option>
-                            <option value="7.5 ซม.">7.5 ซม.</option>
-                            <option value="10 ซม.">10 ซม.</option>
-                            <option value="12.5 ซม.">12.5 ซม.</option>
-                            <option value="15 ซม.">15 ซม.</option>
-                            <option value="20 ซม.">20 ซม.</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">รูปแบบช่องทางราคา (Price Type) <span class="text-red-500">*</span></label>
-                        <select id="priceType" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-blue-500">
-                            <option value="ราคาหน้าโรงงาน (Ex-work)">ราคาหน้าโรงงาน (Ex-work)</option>
-                            <option value="ราคาขายส่งร้านค้า (Wholesale)">ราคาขายส่งร้านค้า (Wholesale)</option>
-                            <option value="ราคาขายปลีกหน้าร้าน (Retail)">ราคาขายปลีกหน้าร้าน (Retail)</option>
-                            <option value="ราคาโครงการ (Project Price)">ราคาโครงการ (Project Price)</option>
-                        </select>
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">ราคาสุทธิ (Net / Ex-work) <span class="text-red-500">*</span></label>
-                            <input type="text" id="netPrice" required placeholder="เช่น 18" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-blue-500">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">ราคารวมส่ง (Delivered) <span class="text-red-500">*</span></label>
-                            <input type="text" id="deliveredPrice" required placeholder="เช่น 21" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-blue-500">
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">สิทธิประโยชน์เพิ่มเติม (Rebate / ส่วนลดท้ายบิล)</label>
-                        <input type="text" id="rebate" placeholder="ระบุ Rebate ปลายปี/รายเดือน (ถ้ามี)" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-blue-500">
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">โปรโมชัน / ของแถม ณ พื้นที่</label>
-                        <input type="text" id="promotion" placeholder="ระบุแถมปูน หรือแถมพรีเมียม (ถ้ามี)" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-blue-500">
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">หมายเหตุภาคสนาม (Remarks / ข้อมูลสถานการณ์เชิงลึก) <span class="text-amber-600 font-bold">*</span></label>
-                        <textarea id="remarks" rows="3" required placeholder="พิมพ์สรุปข้อมูลร้านค้า ยอดซื้อขั้นต่ำ หรือสภาวะสินค้าในพื้นที่อย่างละเอียด..." class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-blue-500"></textarea>
-                    </div>
-
-                    <button type="submit" id="btnSubmitPrice" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-medium rounded-lg py-2.5 transition duration-200 flex items-center justify-center space-x-2 text-sm shadow-md">
-                        <i class="fa-solid fa-cloud-arrow-up"></i>
-                        <span id="btnSubmitText">อัปโหลดข้อมูลราคาเข้าคลาวด์</span>
-                    </button>
-                    <button type="button" id="btnCancelEdit" onclick="cancelEditMode()" class="hidden w-full bg-slate-200 hover:bg-slate-300 text-slate-700 font-medium rounded-lg py-2 transition duration-200 text-xs">
-                        ยกเลิกโหมดแก้ไข
-                    </button>
-                </form>
-            </section>
-
-            <!-- Right Column: Multi-tab & Complex Strategy Tables -->
-            <section class="lg:col-span-2 flex flex-col space-y-6">
+            <!-- TOP GRID SECTION: แบบฟอร์มกรอกข้อมูล และตารางข้อมูลดิบส่วนกลาง -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 
-                <!-- KPI Status Dashboard Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 flex items-center space-x-3">
-                        <div class="p-3 bg-orange-50 text-orange-600 rounded-lg text-lg"><i class="fa-solid fa-compass"></i></div>
-                        <div>
-                            <p class="text-xs text-slate-400 font-medium font-sans">ราคารวมส่งเฉลี่ย (Delivered)</p>
-                            <h3 id="avgPrice" class="text-lg font-bold text-slate-800">กำลังประมวลผล...</h3>
-                        </div>
-                    </div>
-                    <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 flex items-center space-x-3">
-                        <div class="p-3 bg-blue-50 text-blue-600 rounded-lg text-lg"><i class="fa-solid fa-industry"></i></div>
-                        <div>
-                            <p class="text-xs text-slate-400 font-medium font-sans">รายการราคาในระบบ</p>
-                            <h3 id="totalRecords" class="text-lg font-bold text-slate-800">กำลังประมวลผล...</h3>
-                        </div>
-                    </div>
-                    <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 flex items-center space-x-3">
-                        <div class="p-3 bg-emerald-50 text-emerald-600 rounded-lg text-lg"><i class="fa-solid fa-arrows-rotate animate-spin"></i></div>
-                        <div>
-                            <p class="text-xs text-slate-400 font-medium">การเชื่อมโยงระบบ</p>
-                            <button onclick="loadRealtimeData()" class="text-xs font-bold text-emerald-500 hover:underline">คลิกซิงค์แบบเรียลไทม์ 🔄</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ================= STRATEGIC ACTION PLAYBOOK (แผนแก้เกมรายภูมิภาค) ================= -->
-                <div class="bg-gradient-to-r from-orange-600 to-amber-500 rounded-2xl shadow-md p-6 text-white">
-                    <div class="flex items-center space-x-3 pb-4 mb-4 border-b border-orange-400/40">
-                        <div class="bg-white/20 p-2.5 rounded-lg">
-                            <i class="fa-solid fa-chess text-xl"></i>
-                        </div>
-                        <div>
-                            <h2 class="text-lg font-bold">แผนแก้เกมและกลยุทธ์ยุทธวิธีรายภูมิภาค (Strategic Action Playbook)</h2>
-                            <p class="text-xs text-orange-100">วิเคราะห์ความได้เปรียบ-เสียเปรียบของที่ตั้งโรงงานคู่แข่ง เพื่อออกอาวุธปกป้องส่วนแบ่งการตลาด</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Regional Playbook Cards Grid -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="bg-slate-900/40 p-4 rounded-xl border border-white/10">
-                            <h3 class="font-bold text-sm text-yellow-300"><i class="fa-solid fa-map-location-dot mr-1.5"></i>ภูมิภาคตะวันออก & เหนือตอนบน (East & North-Upper Base)</h3>
-                            <p class="text-[11px] text-slate-100 mt-1 mb-2"><b>คู่แข่งหลัก:</b> DRT, TPI, Siam ACC, Smart Block (โรงงานตั้งกระจุกใน East / North-Upper)</p>
-                            <div class="text-[11px] text-slate-200 bg-slate-950/40 p-2 rounded border-l-2 border-yellow-400">
-                                <b>ยุทธวิธี Q-con:</b> ใช้โรงงานสาขา East ของเราดันยอดขายส่งขนาดใหญ่เพื่อตัดกำลังระยะจัดส่งของคู่แข่ง พร้อมทำแคมเปญแถมปูนกาวคู่ค้าท้องถิ่น ป้องกันการทำสัญญาสิทธิประโยชน์พ่วงในโซนชลบุรี/ระยอง
-                            </div>
-                        </div>
-                        <div class="bg-slate-900/40 p-4 rounded-xl border border-white/10">
-                            <h3 class="font-bold text-sm text-cyan-300"><i class="fa-solid fa-truck-fast mr-1.5"></i>ภูมิภาคกรุงเทพฯ & ปริมณฑล (Metro Base)</h3>
-                            <p class="text-[11px] text-slate-100 mt-1 mb-2"><b>คู่แข่งหลัก:</b> Thai con (โรงงานตั้งใน Metro)</p>
-                            <div class="text-[11px] text-slate-200 bg-slate-950/40 p-2 rounded border-l-2 border-cyan-400">
-                                <b>ยุทธวิธี Q-con:</b> ชูจุดเด่นด้านมาตรฐานมอก. ชั้นนำ และระบบส่งมอบที่ยืดหยุ่นในโครงการขนาดใหญ่ โดยใช้โครงข่ายกระจายสินค้าจากคลังปริมณฑล และจัดโครงการจับคู่ผู้รับเหมาเพื่อเพิ่มอัตราระบายสินค้าเข้าตึกสูง
-                            </div>
-                        </div>
-                        <div class="bg-slate-900/40 p-4 rounded-xl border border-white/10">
-                            <h3 class="font-bold text-sm text-green-300"><i class="fa-solid fa-anchor mr-1.5"></i>ภูมิภาคตะวันตก & ภาคใต้ (West & South Base)</h3>
-                            <p class="text-[11px] text-slate-100 mt-1 mb-2"><b>คู่แข่งหลัก:</b> Super Block, Air Block (ตั้งใน West) / ภาคใต้ไม่มีคู่แข่งท้องถิ่นที่มีโรงงานผลิต</p>
-                            <div class="text-[11px] text-slate-200 bg-slate-950/40 p-2 rounded border-l-2 border-green-400">
-                                <b>ยุทธวิธี Q-con:</b> ใช้โรงงานสาขา South รุกคืบยึดครองภาคใต้ทั้งหมดเพื่อตัดต้นทุนค่าขนส่งที่คู่แข่งรายอื่นต้องเสียเพิ่ม ส่วนฝั่งตะวันตกใช้กลยุทธ์ "ราคาหน้าโรงงานคู่ขนาน" ยึดพื้นที่ด่านสำคัญพม่า/เพชรบุรี
-                            </div>
-                        </div>
-                        <div class="bg-slate-900/40 p-4 rounded-xl border border-white/10">
-                            <h3 class="font-bold text-sm text-orange-200"><i class="fa-solid fa-arrow-trend-up mr-1.5"></i>ภูมิภาคอีสาน & เหนือตอนล่าง (E-san & North-Lower)</h3>
-                            <p class="text-[11px] text-slate-100 mt-1 mb-2"><b>คู่แข่งหลัก:</b> SD con (โรงงานตั้งใน E-san)</p>
-                            <div class="text-[11px] text-slate-200 bg-slate-950/40 p-2 rounded border-l-2 border-orange-300">
-                                <b>ยุทธวิธี Q-con:</b> ชงโปรโมชัน Rebate ท้ายปีให้กับดิลเลอร์รายใหญ่ในขอนแก่น/อุดรธานี เพื่อเพิ่มมูลค่าการนำเข้าสินค้า Q-con แทนการหั่นราคารายเที่ยว เพื่อทำลายกำแพงต้นทุนขนส่งที่เสียเปรียบ SD con
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ================= 3. TABLE: RAW DATA DATABASE ================= -->
-                <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 flex flex-col">
-                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-4 mb-4 border-b border-slate-100 gap-4">
+                <!-- Left Column: Form (lg:col-span-1) -->
+                <section class="lg:col-span-1 bg-white rounded-2xl shadow-sm border border-slate-100 p-6 self-start sticky top-24">
+                    <div class="flex items-center justify-between pb-4 mb-6 border-b border-slate-100">
                         <div class="flex items-center space-x-2">
-                            <i class="fa-solid fa-database text-orange-600 text-lg"></i>
-                            <h2 class="text-lg font-bold text-slate-800">ตารางข้อมูลราคาคู่แข่งสุทธิจาก Google Sheets​</h2>
+                            <i id="formIcon" class="fa-solid fa-pen-to-square text-orange-600 text-lg"></i>
+                            <h2 id="formTitle" class="text-lg font-bold text-slate-800">บันทึกข้อมูลราคาใหม่</h2>
                         </div>
-                        <div class="flex flex-wrap gap-2">
-                            <button id="btnToggleTable" onclick="toggleTableVisibility()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium rounded-lg px-3 py-1.5 text-xs transition duration-200 flex items-center space-x-1.5 border border-slate-200">
-                                <i id="toggleIcon" class="fa-solid fa-eye-slash"></i>
-                                <span id="toggleText">แสดงตารางข้อมูล</span>
-                            </button>
-                            <button onclick="exportTableToExcel('priceTable', 'Qcon_Competitor_Raw_Data')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg px-3 py-1.5 text-xs transition duration-200 flex items-center space-x-1.5">
-                                <i class="fa-solid fa-file-excel"></i>
-                                <span>Export Excel</span>
-                            </button>
-                        </div>
+                        <span id="editIndicator" class="hidden text-xs bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded-full">โหมดแก้ไข</span>
                     </div>
 
-                    <!-- Filter Bar for Raw Table -->
-                    <div id="filterContainer" class="hidden grid grid-cols-2 md:grid-cols-4 gap-3 bg-slate-50 p-4 rounded-xl border border-slate-100 mb-4">
+                    <form id="priceForm" class="space-y-4" onsubmit="saveData(event)">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 mb-1">ปีที่บันทึก (Year) <span class="text-red-500">*</span></label>
+                                <select id="year" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-blue-500">
+                                    <option value="2026">2026</option>
+                                    <option value="2025">2025</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 mb-1">เดือน (Month) <span class="text-red-500">*</span></label>
+                                <select id="month" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-blue-500">
+                                    <option value="มกราคม">มกราคม</option>
+                                    <option value="กุมภาพันธ์">กุมภาพันธ์</option>
+                                    <option value="มีนาคม">มีนาคม</option>
+                                    <option value="เมษายน">เมษายน</option>
+                                    <option value="พฤษภาคม">พฤษภาคม</option>
+                                    <option value="มิถุนายน">มิถุนายน</option>
+                                    <option value="กรกฎาคม" selected>กรกฎาคม</option>
+                                    <option value="สิงหาคม">สิงหาคม</option>
+                                    <option value="กันยายน">กันยายน</option>
+                                    <option value="ตุลาคม">ตุลาคม</option>
+                                    <option value="พฤศจิกายน">พฤศจิกายน</option>
+                                    <option value="ธันวาคม">ธันวาคม</option>
+                                </select>
+                            </div>
+                        </div>
+
                         <div>
-                            <label class="block text-[10px] font-bold text-slate-400 mb-1">กรองภูมิภาค (Region)</label>
-                            <select id="filterRegion" onchange="applyFilters()" class="w-full bg-white border border-slate-200 rounded-lg px-2 py-1.5 text-xs focus:outline-none">
-                                <option value="">-- ทั้งหมด --</option>
-                                <option value="Metro">Metro</option>
-                                <option value="East">East</option>
-                                <option value="West">West</option>
-                                <option value="E-san">E-san</option>
-                                <option value="North-Lower">North-Lower</option>
-                                <option value="North-Upper">North-Upper</option>
-                                <option value="South">South</option>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">ภูมิภาคพื้นที่สำรวจ (Region) <span class="text-red-500">*</span></label>
+                            <select id="region" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-blue-500">
+                                <option value="">-- เลือกภูมิภาค --</option>
+                                <option value="Metro">Metro (กรุงเทพฯ/ปริมณฑล)</option>
+                                <option value="East">East (ตะวันออก)</option>
+                                <option value="West">West (ตะวันตก)</option>
+                                <option value="E-san">E-san (ตะวันออกเฉียงเหนือ)</option>
+                                <option value="North-Lower">North-Lower (เหนือตอนล่าง)</option>
+                                <option value="North-Upper">North-Upper (เหนือตอนบน)</option>
+                                <option value="South">South (ใต้)</option>
                             </select>
                         </div>
+
                         <div>
-                            <label class="block text-[10px] font-bold text-slate-400 mb-1">กรองยี่ห้อ (Brand)</label>
-                            <select id="filterBrand" onchange="applyFilters()" class="w-full bg-white border border-slate-200 rounded-lg px-2 py-1.5 text-xs focus:outline-none">
-                                <option value="">-- ทั้งหมด --</option>
-                                <option value="Q-con">Q-con</option>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">แบรนด์สินค้าที่พบ (Brand) <span class="text-red-500">*</span></label>
+                            <select id="brand" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-blue-500">
+                                <option value="">-- เลือกแบรนด์คู่แข่ง --</option>
+                                <option value="Q-con">Q-con (สินค้าของเรา)</option>
                                 <option value="Thai con">Thai con</option>
                                 <option value="Super Block">Super Block</option>
                                 <option value="DRT">DRT</option>
@@ -347,66 +168,227 @@
                                 <option value="Smart Block">Smart Block</option>
                             </select>
                         </div>
+
                         <div>
-                            <label class="block text-[10px] font-bold text-slate-400 mb-1">กรองปี (Year)</label>
-                            <select id="filterYear" onchange="applyFilters()" class="w-full bg-white border border-slate-200 rounded-lg px-2 py-1.5 text-xs focus:outline-none">
-                                <option value="">-- ทั้งหมด --</option>
-                                <option value="2026">2026</option>
-                                <option value="2025">2025</option>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">ความหนาอิฐมวลเบา (Size) <span class="text-red-500">*</span></label>
+                            <select id="size" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-blue-500">
+                                <option value="">-- เลือกขนาดความหนา --</option>
+                                <option value="7 ซม.">7 ซม.</option>
+                                <option value="7.5 ซม.">7.5 ซม.</option>
+                                <option value="10 ซม.">10 ซม.</option>
+                                <option value="12.5 ซม.">12.5 ซม.</option>
+                                <option value="15 ซม.">15 ซม.</option>
+                                <option value="20 ซม.">20 ซม.</option>
                             </select>
                         </div>
+
                         <div>
-                            <label class="block text-[10px] font-bold text-slate-400 mb-1">กรองเดือน (Month)</label>
-                            <select id="filterMonth" onchange="applyFilters()" class="w-full bg-white border border-slate-200 rounded-lg px-2 py-1.5 text-xs focus:outline-none">
-                                <option value="">-- ทั้งหมด --</option>
-                                <option value="มกราคม">มกราคม</option>
-                                <option value="กุมภาพันธ์">กุมภาพันธ์</option>
-                                <option value="มีนาคม">มีนาคม</option>
-                                <option value="เมษายน">เมษายน</option>
-                                <option value="พฤษภาคม">พฤษภาคม</option>
-                                <option value="มิถุนายน">มิถุนายน</option>
-                                <option value="กรกฎาคม">กรกฎาคม</option>
-                                <option value="สิงหาคม">สิงหาคม</option>
-                                <option value="กันยายน">กันยายน</option>
-                                <option value="ตุลาคม">ตุลาคม</option>
-                                <option value="พฤศจิกายน">พฤศจิกายน</option>
-                                <option value="ธันวาคม">ธันวาคม</option>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">รูปแบบช่องทางราคา (Price Type) <span class="text-red-500">*</span></label>
+                            <select id="priceType" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-blue-500">
+                                <option value="ราคาหน้าโรงงาน (Ex-work)">ราคาหน้าโรงงาน (Ex-work)</option>
+                                <option value="ราคาขายส่งร้านค้า (Wholesale)">ราคาขายส่งร้านค้า (Wholesale)</option>
+                                <option value="ราคาขายปลีกหน้าร้าน (Retail)">ราคาขายปลีกหน้าร้าน (Retail)</option>
+                                <option value="ราคาโครงการ (Project Price)">ราคาโครงการ (Project Price)</option>
                             </select>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 mb-1">ราคาสุทธิ (Net / Ex-work) <span class="text-red-500">*</span></label>
+                                <input type="text" id="netPrice" required placeholder="เช่น 18" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-blue-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 mb-1">ราคารวมส่ง (Delivered) <span class="text-red-500">*</span></label>
+                                <input type="text" id="deliveredPrice" required placeholder="เช่น 21" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-blue-500">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">สิทธิประโยชน์เพิ่มเติม (Rebate / ส่วนลดท้ายบิล)</label>
+                            <input type="text" id="rebate" placeholder="ระบุ Rebate ปลายปี/รายเดือน (ถ้ามี)" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-blue-500">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">โปรโมชัน / ของแถม ณ พื้นที่</label>
+                            <input type="text" id="promotion" placeholder="ระบุแถมปูน หรือแถมพรีเมียม (ถ้ามี)" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-blue-500">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">หมายเหตุภาคสนาม (Remarks / ข้อมูลสถานการณ์เชิงลึก) <span class="text-amber-600 font-bold">*</span></label>
+                            <textarea id="remarks" rows="3" required placeholder="พิมพ์สรุปข้อมูลร้านค้า ยอดซื้อขั้นต่ำ หรือสภาวะสินค้าในพื้นที่อย่างละเอียด..." class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-blue-500"></textarea>
+                        </div>
+
+                        <button type="submit" id="btnSubmitPrice" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-medium rounded-lg py-2.5 transition duration-200 flex items-center justify-center space-x-2 text-sm shadow-md">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <span id="btnSubmitText">อัปโหลดข้อมูลราคาเข้าคลาวด์</span>
+                        </button>
+                        <button type="button" id="btnCancelEdit" onclick="cancelEditMode()" class="hidden w-full bg-slate-200 hover:bg-slate-300 text-slate-700 font-medium rounded-lg py-2 transition duration-200 text-xs">
+                            ยกเลิกโหมดแก้ไข
+                        </button>
+                    </form>
+                </section>
+
+                <!-- Right Column: KPIs, Playbook & Raw Table (lg:col-span-2) -->
+                <section class="lg:col-span-2 flex flex-col space-y-6">
+                    
+                    <!-- KPI Status Row -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 flex items-center space-x-3">
+                            <div class="p-3 bg-orange-50 text-orange-600 rounded-lg text-lg"><i class="fa-solid fa-compass"></i></div>
+                            <div>
+                                <p class="text-xs text-slate-400 font-medium font-sans">ราคารวมส่งเฉลี่ย (Delivered)</p>
+                                <h3 id="avgPrice" class="text-lg font-bold text-slate-800">กำลังประมวลผล...</h3>
+                            </div>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 flex items-center space-x-3">
+                            <div class="p-3 bg-blue-50 text-blue-600 rounded-lg text-lg"><i class="fa-solid fa-industry"></i></div>
+                            <div>
+                                <p class="text-xs text-slate-400 font-medium font-sans">รายการราคาในระบบ</p>
+                                <h3 id="totalRecords" class="text-lg font-bold text-slate-800">กำลังประมวลผล...</h3>
+                            </div>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 flex items-center space-x-3">
+                            <div class="p-3 bg-emerald-50 text-emerald-600 rounded-lg text-lg"><i class="fa-solid fa-arrows-rotate animate-spin"></i></div>
+                            <div>
+                                <p class="text-xs text-slate-400 font-medium">การเชื่อมโยงระบบ</p>
+                                <button onclick="loadRealtimeData()" class="text-xs font-bold text-emerald-500 hover:underline">คลิกซิงค์แบบเรียลไทม์ 🔄</button>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Raw Data Table Container -->
-                    <div id="tableWrapper" class="hidden overflow-x-auto">
-                        <table id="priceTable" class="w-full text-left border-collapse text-sm text-slate-600">
-                            <thead>
-                                <tr class="bg-slate-50 text-slate-500 font-semibold border-b border-slate-100">
-                                    <th class="p-3 text-center">ปี/เดือน</th>
-                                    <th class="p-3">ภูมิภาค</th>
-                                    <th class="p-3">แบรนด์</th>
-                                    <th class="p-3 text-center">ขนาด</th>
-                                    <th class="p-3">รูปแบบราคา</th>
-                                    <th class="p-3 text-right">ราคาสุทธิ (Ex-work)</th>
-                                    <th class="p-3 text-right">ราคารวมส่ง (Delivered)</th>
-                                    <th class="p-3 text-center">จัดการ</th>
-                                </tr>
-                            </thead>
-                            <tbody id="priceTableBody" class="divide-y divide-slate-100">
-                                <tr>
-                                    <td colspan="8" class="text-center p-8 text-slate-400">ปิดการแสดงผลตารางข้อมูลดิบชั่วคราว กรุณากดปุ่มเพื่อเริ่มใช้งาน</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <!-- STRATEGIC ACTION PLAYBOOK (แผนแก้เกมรายภูมิภาคผันแปรรายเดือน) -->
+                    <div class="bg-gradient-to-r from-orange-600 to-amber-500 rounded-2xl shadow-md p-6 text-white">
+                        <div class="flex items-center space-x-3 pb-4 mb-4 border-b border-orange-400/40">
+                            <div class="bg-white/20 p-2.5 rounded-lg">
+                                <i class="fa-solid fa-chess text-xl"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-lg font-bold">แผนแก้เกมและกลยุทธ์ยุทธวิธีรายภูมิภาค (Strategic Action Playbook)</h2>
+                                <p class="text-xs text-orange-100">* ระบบอัจฉริยะวิเคราะห์ราคาคู่แข่งเปรียบเทียบในเดือนและปีปัจจุบันอัตโนมัติ</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Playbook Cards Grid -->
+                        <div id="playbookContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="col-span-2 text-center p-4 text-slate-200 text-xs italic">กำลังสแกนฐานข้อมูลเพื่อร่างแผนยุทธวิธี...</div>
+                        </div>
                     </div>
-                </div>
 
-                <!-- ================= 4. ADVANCED: TABLE REPORT BLOCK COMPETITIVE ANALYSIS ================= -->
+                    <!-- RAW PRICE DATA TABLE (ตารางฐานข้อมูลหลัก Google Sheets) -->
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 flex flex-col">
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-4 mb-4 border-b border-slate-100 gap-4">
+                            <div class="flex items-center space-x-2">
+                                <i class="fa-solid fa-database text-orange-600 text-lg"></i>
+                                <h2 class="text-lg font-bold text-slate-800">ตารางข้อมูลราคาคู่แข่งสุทธิจาก Google Sheets​</h2>
+                            </div>
+                            <div class="flex flex-wrap gap-2">
+                                <button id="btnToggleTable" onclick="toggleTableVisibility()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium rounded-lg px-3 py-1.5 text-xs transition duration-200 flex items-center space-x-1.5 border border-slate-200">
+                                    <i id="toggleIcon" class="fa-solid fa-eye-slash"></i>
+                                    <span id="toggleText">แสดงตารางข้อมูล</span>
+                                </button>
+                                <button onclick="exportTableToExcel('priceTable', 'Qcon_Competitor_Raw_Data')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg px-3 py-1.5 text-xs transition duration-200 flex items-center space-x-1.5">
+                                    <i class="fa-solid fa-file-excel"></i>
+                                    <span>Export Excel</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Filter Bar for Raw Table -->
+                        <div id="filterContainer" class="hidden grid grid-cols-2 md:grid-cols-4 gap-3 bg-slate-50 p-4 rounded-xl border border-slate-100 mb-4">
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 mb-1">กรองภูมิภาค (Region)</label>
+                                <select id="filterRegion" onchange="applyFilters()" class="w-full bg-white border border-slate-200 rounded-lg px-2 py-1.5 text-xs focus:outline-none">
+                                    <option value="">-- ทั้งหมด --</option>
+                                    <option value="Metro">Metro</option>
+                                    <option value="East">East</option>
+                                    <option value="West">West</option>
+                                    <option value="E-san">E-san</option>
+                                    <option value="North-Lower">North-Lower</option>
+                                    <option value="North-Upper">North-Upper</option>
+                                    <option value="South">South</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 mb-1">กรองยี่ห้อ (Brand)</label>
+                                <select id="filterBrand" onchange="applyFilters()" class="w-full bg-white border border-slate-200 rounded-lg px-2 py-1.5 text-xs focus:outline-none">
+                                    <option value="">-- ทั้งหมด --</option>
+                                    <option value="Q-con">Q-con</option>
+                                    <option value="Thai con">Thai con</option>
+                                    <option value="Super Block">Super Block</option>
+                                    <option value="DRT">DRT</option>
+                                    <option value="TPI">TPI</option>
+                                    <option value="Air Block">Air Block</option>
+                                    <option value="SD con">SD con</option>
+                                    <option value="Siam ACC">Siam ACC</option>
+                                    <option value="Smart Block">Smart Block</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 mb-1">กรองปี (Year)</label>
+                                <select id="filterYear" onchange="applyFilters()" class="w-full bg-white border border-slate-200 rounded-lg px-2 py-1.5 text-xs focus:outline-none">
+                                    <option value="">-- ทั้งหมด --</option>
+                                    <option value="2026">2026</option>
+                                    <option value="2025">2025</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 mb-1">กรองเดือน (Month)</label>
+                                <select id="filterMonth" onchange="applyFilters()" class="w-full bg-white border border-slate-200 rounded-lg px-2 py-1.5 text-xs focus:outline-none">
+                                    <option value="">-- ทั้งหมด --</option>
+                                    <option value="มกราคม">มกราคม</option>
+                                    <option value="กุมภาพันธ์">กุมภาพันธ์</option>
+                                    <option value="มีนาคม">มีนาคม</option>
+                                    <option value="เมษายน">เมษายน</option>
+                                    <option value="พฤษภาคม">พฤษภาคม</option>
+                                    <option value="มิถุนายน">มิถุนายน</option>
+                                    <option value="กรกฎาคม">กรกฎาคม</option>
+                                    <option value="สิงหาคม">สิงหาคม</option>
+                                    <option value="กันยายน">กันยายน</option>
+                                    <option value="ตุลาคม">ตุลาคม</option>
+                                    <option value="พฤศจิกายน">พฤศจิกายน</option>
+                                    <option value="ธันวาคม">ธันวาคม</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Raw Data Table Container -->
+                        <div id="tableWrapper" class="hidden overflow-x-auto">
+                            <table id="priceTable" class="w-full text-left border-collapse text-sm text-slate-600">
+                                <thead>
+                                    <tr class="bg-slate-50 text-slate-500 font-semibold border-b border-slate-100">
+                                        <th class="p-3 text-center">ปี/เดือน</th>
+                                        <th class="p-3">ภูมิภาค</th>
+                                        <th class="p-3">แบรนด์</th>
+                                        <th class="p-3 text-center">ขนาด</th>
+                                        <th class="p-3">รูปแบบราคา</th>
+                                        <th class="p-3 text-right">ราคาสุทธิ (Ex-work)</th>
+                                        <th class="p-3 text-right">ราคารวมส่ง (Delivered)</th>
+                                        <th class="p-3 text-center">จัดการ</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="priceTableBody" class="divide-y divide-slate-100">
+                                    <tr>
+                                        <td colspan="8" class="text-center p-8 text-slate-400">ปิดการแสดงผลตารางข้อมูลดิบชั่วคราว กรุณากดปุ่มเพื่อเริ่มใช้งาน</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </section>
+            </div>
+            
+            <!-- BOTTOM WIDE AREA SECTION: ตารางวิเคราะห์เชิงสถิติและยุทธศาสตร์คู่แข่ง (ขยายความกว้างเต็ม 100% ป้องกันสกรอลบาร์) -->
+            <div class="space-y-6 pt-2">
+                
+                <!-- 1. ตารางรายงานวิเคราะห์เปรียบเทียบราคาและการแข่งขันรายภูมิภาค (Ex-work & Delivered MoM Base) -->
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 flex flex-col">
                     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-4 mb-4 border-b border-slate-100 gap-4">
                         <div class="flex items-center space-x-2">
                             <i class="fa-solid fa-cubes text-emerald-600 text-lg"></i>
                             <div>
                                 <h2 class="text-lg font-bold text-slate-800">ตารางรายงานวิเคราะห์เปรียบเทียบราคาและการแข่งขันอิฐมวลเบา แยกตามภาค</h2>
-                                <p class="text-xs text-slate-400 font-medium">* ราคาฐานโรงงาน (Ex-work Base), แสดง MoM, พิกัดฐานผลิต และรายละเอียดข่าวกรองครบถ้วน (ไม่ตัดข้อความ)</p>
+                                <p class="text-xs text-slate-400 font-medium">* จัดกลุ่มราคา Ex-work และ Delivered พร้อมวิเคราะห์การเปลี่ยนเทียบ MoM % ของทั้งสองโครงสร้างต้นทุนอย่างสมบูรณ์</p>
                             </div>
                         </div>
                         <button onclick="exportTableToExcel('compTable', 'Strategic_Block_Competition_Analysis_Report')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg px-3 py-1.5 text-xs transition duration-200 flex items-center space-x-1.5 shadow-sm">
@@ -473,31 +455,39 @@
                         </div>
                     </div>
 
-                    <!-- Complex Competitive Table Element -->
+                    <!-- Complex Competitive Table Element (ขยายกว้าง ลดช่องไฟเป็น p-2 สบายตาไม่มีสกอลบาร์) -->
                     <div class="overflow-x-auto">
-                        <table id="compTable" class="w-full text-left border-collapse text-[11px] text-slate-600">
+                        <table id="compTable" class="w-full text-left border-collapse text-[11px] text-slate-600 table-auto">
                             <thead>
                                 <tr class="bg-slate-900 text-white font-bold">
-                                    <th class="p-3 w-16 text-center">ภาค</th>
-                                    <th class="p-3 w-40">แบรนด์สินค้า / ฐานการผลิต</th>
-                                    <th class="p-3 text-center w-12">ขนาด</th>
-                                    <th class="p-3 text-right bg-rose-950/20 w-16 text-rose-300">ต่ำสุด Ex-work</th>
-                                    <th class="p-3 text-right bg-blue-950/20 w-16 text-blue-300">สูงสุด Ex-work</th>
-                                    <th class="p-3 text-center w-16 border-r border-slate-700">MoM Change</th>
-                                    <th class="p-3 w-48">รายละเอียดโปรโมชัน (Rebate & Promo)</th>
-                                    <th class="p-3 w-64">ข้อมูลเชิงลึกและหมายเหตุภาคสนาม (Remarks)</th>
+                                    <th class="p-2 text-center">ภาค</th>
+                                    <th class="p-2">แบรนด์สินค้า / ฐานการผลิต</th>
+                                    <th class="p-2 text-center">ขนาด</th>
+                                    
+                                    <!-- กลุ่มราคา Ex-work -->
+                                    <th class="p-2 text-right bg-rose-950/40 text-rose-300">ต่ำสุด Ex-work</th>
+                                    <th class="p-2 text-right bg-rose-950/20 text-rose-300 border-r border-slate-700">สูงสุด Ex-work</th>
+                                    <th class="p-2 text-center bg-rose-900/10 border-r border-slate-700">MoM Change (Ex-work)</th>
+                                    
+                                    <!-- กลุ่มราคา Delivered -->
+                                    <th class="p-2 text-right bg-emerald-950/40 text-emerald-300">ต่ำสุด Delivered</th>
+                                    <th class="p-2 text-right bg-emerald-950/20 text-emerald-300 border-r border-slate-700">สูงสุด Delivered</th>
+                                    <th class="p-2 text-center bg-emerald-900/10 border-r border-slate-700">MoM Change (Delivered)</th>
+                                    
+                                    <th class="p-2">รายละเอียดโปรโมชัน (Rebate & Promo)</th>
+                                    <th class="p-2">ข้อมูลเชิงลึกและหมายเหตุภาคสนาม (Remarks)</th>
                                 </tr>
                             </thead>
                             <tbody id="compTableBody" class="divide-y divide-slate-200 bg-white">
                                 <tr>
-                                    <td colspan="8" class="text-center p-6 text-slate-400">กำลังจัดทำรายงานและประเมินพิกัดโรงงานเชิงลึก...</td>
+                                    <td colspan="11" class="text-center p-6 text-slate-400">กำลังจัดทำรายงานและประเมินพิกัดโรงงานเชิงลึก...</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
 
-                <!-- ================= 5. TABLE: STRATEGIC AVERAGE PRICE & BRAND POSITIONING ================= -->
+                <!-- 2. ตารางบทวิเคราะห์ทิศทางราคาเฉลี่ยและยุทธศาสตร์คู่แข่งรายยี่ห้อ (Ex-work & Delivered Avg) -->
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 flex flex-col">
                     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-4 mb-4 border-b border-slate-100 gap-4">
                         <div class="flex items-center space-x-2">
@@ -589,7 +579,8 @@
                     </div>
                 </div>
 
-            </section>
+            </div>
+
         </main>
     </div>
 
@@ -818,7 +809,8 @@
                     globalRawData = data;
                     renderKPIs(data);
                     
-                    // ปรับแต่งการโหลดเริ่มโปรแกรม ให้คำนวณผ่านระบบ Filter หลักที่เชื่อมโยงความปลอดภัยแล้ว
+                    // ปรับแต่งเริ่มโปรแกรม ให้ส่งสถิติทั้งหมดเข้าระบบคำนวณ Playbook และตารางรายงานกลยุทธ์ทั้งคู่ทันที
+                    generateDynamicPlaybook(data);
                     applyStrategicFilters();
                     applyCompFilters();
                     
@@ -831,7 +823,7 @@
                 });
         }
 
-        // 7. แสดงตัวเลขสรุปด่วน (KPI Cards) - ติดตั้ง Safety DOM Guards ป้องกันจุดผิดพลาดขวางการทำงานด้านล่าง
+        // 7. แสดงตัวเลขสรุปด่วน (KPI Cards) - ติดตั้ง Safety DOM Guards ป้องกันความผิดพลาดของแอปพลิเคชัน
         function renderKPIs(records) {
             let totalDeliveredSum = 0;
             records.forEach(item => {
@@ -920,7 +912,7 @@
             }
         }
 
-        // 10. จัดเตรียมและกรองข้อมูลสำหรับ: ตารางบทวิเคราะห์ทิศทางราคาเฉลี่ยและยุทธศาสตร์คู่แข่งรายยี่ห้อ (ปรับเป็น String Compare)
+        // 10. จัดเตรียมและกรองข้อมูลสำหรับ: ตารางบทวิเคราะห์ทิศทางราคาเฉลี่ยและยุทธศาสตร์คู่แข่งรายยี่ห้อ (ปรับปรุงสิทธิ์ Filter คัดออก Type Mismatch เคร่งครัด)
         function applyStrategicFilters() {
             const fRegion = document.getElementById('stratFilterRegion').value;
             const fBrand = document.getElementById('stratFilterBrand').value;
@@ -966,8 +958,8 @@
                     brandGroups[brand].deliveredSum += deliVal;
                     brandGroups[brand].deliveredCount++;
                 }
-                if (item.rebate && item.rebate !== "ไม่มี") brandGroups[brand].rebates.push(item.rebate);
-                if (item.promotion && item.promotion !== "ไม่มีโปรโมชัน" && item.promotion !== "ไม่มี") brandGroups[brand].promos.push(item.promotion);
+                if (item.rebate && item.rebate !== "ไม่มี" && item.rebate !== "-") brandGroups[brand].rebates.push(item.rebate);
+                if (item.promotion && item.promotion !== "ไม่มีโปรโมชัน" && item.promotion !== "ไม่มี" && item.promotion !== "-") brandGroups[brand].promos.push(item.promotion);
             });
 
             Object.keys(brandGroups).forEach(brand => {
@@ -996,7 +988,7 @@
             });
         }
 
-        // 11. จัดเตรียมและกรองข้อมูลสำหรับ: ตารางรายงานวิเคราะห์เปรียบเทียบราคาและการแข่งขันอิฐมวลเบา (Ex-work + MoM)
+        // 11. จัดเตรียมและกรองข้อมูลสำหรับ: ตารางรายงานวิเคราะห์เปรียบเทียบราคาและการแข่งขันอิฐมวลเบา
         function applyCompFilters() {
             const fRegion = document.getElementById('compFilterRegion').value;
             const fBrand = document.getElementById('compFilterBrand').value;
@@ -1013,7 +1005,7 @@
             renderBlockCompTable(filtered);
         }
 
-        // ฟังก์ชันเปรียบเทียบราคาเดือนก่อนหน้า MoM (แปลงตัวแปรปีและเดือนอย่างระมัดระวังเพื่อแก้ปัญหาตารางไม่ขึ้น)
+        // ฟังก์ชันเปรียบเทียบราคา Ex-work เดือนก่อนหน้า MoM 
         function findPreviousMonthPrice(currentRegion, currentBrand, currentSize, currentYear, currentMonthName) {
             if (!currentMonthName) return null;
             const currentMonthIndex = monthsOrder.indexOf(String(currentMonthName).trim());
@@ -1044,12 +1036,43 @@
             return null;
         }
 
+        // ฟังก์ชันเปรียบเทียบราคา Delivered เดือนก่อนหน้า MoM
+        function findPreviousMonthDeliveredPrice(currentRegion, currentBrand, currentSize, currentYear, currentMonthName) {
+            if (!currentMonthName) return null;
+            const currentMonthIndex = monthsOrder.indexOf(String(currentMonthName).trim());
+            if (currentMonthIndex === -1) return null; // Safeguard
+
+            let targetMonthName = "";
+            let targetYear = parseInt(currentYear);
+
+            if (currentMonthIndex === 0) {
+                targetMonthName = "ธันวาคม";
+                targetYear = targetYear - 1;
+            } else {
+                targetMonthName = monthsOrder[currentMonthIndex - 1];
+            }
+
+            const matchedRecords = globalRawData.filter(item => {
+                return String(item.region).trim() === String(currentRegion).trim() &&
+                       String(item.brand).trim() === String(currentBrand).trim() &&
+                       String(item.size).trim() === String(currentSize).trim() &&
+                       parseInt(item.year) === targetYear &&
+                       String(item.month).trim() === String(targetMonthName).trim();
+            });
+
+            if (matchedRecords.length > 0) {
+                const total = matchedRecords.reduce((sum, item) => sum + getAverageNumericPrice(item.deliveredPrice), 0);
+                return total / matchedRecords.length;
+            }
+            return null;
+        }
+
         function renderBlockCompTable(records) {
             const tbody = document.getElementById('compTableBody');
             tbody.innerHTML = '';
 
             if (!records || records.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="8" class="text-center p-6 text-slate-400">ไม่มีข้อมูลตามตัวเลือกกรองในปัจจุบัน</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="11" class="text-center p-6 text-slate-400">ไม่มีข้อมูลตามตัวเลือกกรองในปัจจุบัน</td></tr>`;
                 return;
             }
 
@@ -1071,6 +1094,7 @@
                         year,
                         month,
                         exworkValues: [],
+                        deliveredValues: [], // เก็บค่า Delivered เพื่อดึงข้อมูลมาเปรียบเทียบในคอลัมน์ใหม่
                         rebates: [],
                         promotions: [],
                         remarksList: []
@@ -1079,9 +1103,12 @@
                 const exworkVal = getAverageNumericPrice(item.netPrice);
                 if (exworkVal > 0) grouped[key].exworkValues.push(exworkVal);
                 
-                if (item.rebate && item.rebate !== "ไม่มี") grouped[key].rebates.push(item.rebate);
-                if (item.promotion && item.promotion !== "ไม่มีโปรโมชัน") grouped[key].promotions.push(item.promotion);
-                if (item.remarks && item.remarks.trim() !== "" && item.remarks !== "ไม่มี") {
+                const deliveredVal = getAverageNumericPrice(item.deliveredPrice);
+                if (deliveredVal > 0) grouped[key].deliveredValues.push(deliveredVal);
+
+                if (item.rebate && item.rebate !== "ไม่มี" && item.rebate !== "-") grouped[key].rebates.push(item.rebate);
+                if (item.promotion && item.promotion !== "ไม่มีโปรโมชัน" && item.promotion !== "ไม่มี" && item.promotion !== "-") grouped[key].promotions.push(item.promotion);
+                if (item.remarks && item.remarks.trim() !== "" && item.remarks !== "ไม่มี" && item.remarks !== "-") {
                     grouped[key].remarksList.push(item.remarks.trim());
                 }
             });
@@ -1100,10 +1127,15 @@
                 const maxEx = item.exworkValues.length > 0 ? Math.max(...item.exworkValues) : 0;
                 const avgEx = item.exworkValues.length > 0 ? (item.exworkValues.reduce((a, b) => a + b, 0) / item.exworkValues.length) : 0;
 
+                // คำนวณขีดสุด ต่ำสุด-สูงสุด Delivered
+                const minDelivered = item.deliveredValues.length > 0 ? Math.min(...item.deliveredValues) : 0;
+                const maxDelivered = item.deliveredValues.length > 0 ? Math.max(...item.deliveredValues) : 0;
+                const avgDelivered = item.deliveredValues.length > 0 ? (item.deliveredValues.reduce((a, b) => a + b, 0) / item.deliveredValues.length) : 0;
+
                 // ดึงตำแหน่งพิกัดโรงงานหลัก
                 const plantLocation = plantLocations[item.brand] || "ไม่ระบุตำแหน่งแน่ชัด";
 
-                // คำนวณ MoM % Change เทียบกับเดือนก่อนหน้า
+                // คำนวณ MoM % Change และจัดรูปลักษณ์ใหม่อ่านง่ายขึ้นเด่นชัด
                 const prevMonthAvg = findPreviousMonthPrice(item.region, item.brand, item.size, item.year, item.month);
                 let momChangeDisplay = "";
 
@@ -1112,43 +1144,94 @@
                     const percent = (diff / prevMonthAvg) * 100;
                     
                     if (diff > 0) {
-                        momChangeDisplay = `<span class="text-rose-600 font-bold"><i class="fa-solid fa-arrow-trend-up"></i> +${percent.toFixed(1)}%</span>`;
+                        momChangeDisplay = `
+                            <div class="flex flex-col items-center justify-center">
+                                <span class="bg-rose-50 text-rose-600 font-bold px-1.5 py-0.5 rounded text-[10px] flex items-center shadow-sm">
+                                    ▲ +${percent.toFixed(1)}%
+                                </span>
+                                <span class="text-[9px] text-rose-500 font-medium mt-0.5">(+฿${diff.toFixed(2)})</span>
+                            </div>`;
                     } else if (diff < 0) {
-                        momChangeDisplay = `<span class="text-emerald-600 font-bold"><i class="fa-solid fa-arrow-trend-down"></i> -${Math.abs(percent).toFixed(1)}%</span>`;
+                        momChangeDisplay = `
+                            <div class="flex flex-col items-center justify-center">
+                                <span class="bg-emerald-50 text-emerald-600 font-bold px-1.5 py-0.5 rounded text-[10px] flex items-center shadow-sm">
+                                    ▼ -${Math.abs(percent).toFixed(1)}%
+                                </span>
+                                <span class="text-[9px] text-emerald-600 font-medium mt-0.5">(-฿${Math.abs(diff).toFixed(2)})</span>
+                            </div>`;
                     } else {
-                        momChangeDisplay = `<span class="text-slate-400 font-semibold">คงที่</span>`;
+                        momChangeDisplay = `<span class="bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full font-semibold text-[10px]">คงที่</span>`;
                     }
                 } else {
-                    momChangeDisplay = `<span class="text-slate-400 italic">N/A</span>`;
+                    momChangeDisplay = `<span class="text-slate-400 italic text-[10px]">N/A</span>`;
                 }
 
-                // สรุปสิทธิประโยชน์ และโปรโมชัน (แก้ไขแก้ปัญหาพิมพ์ตกตัวแปร rebt ที่เคยขวางการแสดงผลตารางเรียบร้อย)
+                // คำนวณ MoM % Change (Delivered)
+                const prevMonthAvgDelivered = findPreviousMonthDeliveredPrice(item.region, item.brand, item.size, item.year, item.month);
+                let momChangeDeliveredDisplay = "";
+
+                if (prevMonthAvgDelivered !== null && prevMonthAvgDelivered > 0 && avgDelivered > 0) {
+                    const diffDelivered = avgDelivered - prevMonthAvgDelivered;
+                    const percentDelivered = (diffDelivered / prevMonthAvgDelivered) * 100;
+                    
+                    if (diffDelivered > 0) {
+                        momChangeDeliveredDisplay = `
+                            <div class="flex flex-col items-center justify-center">
+                                <span class="bg-rose-50 text-rose-600 font-bold px-1.5 py-0.5 rounded text-[10px] flex items-center shadow-sm">
+                                    ▲ +${percentDelivered.toFixed(1)}%
+                                </span>
+                                <span class="text-[9px] text-rose-500 font-medium mt-0.5">(+฿${diffDelivered.toFixed(2)})</span>
+                            </div>`;
+                    } else if (diffDelivered < 0) {
+                        momChangeDeliveredDisplay = `
+                            <div class="flex flex-col items-center justify-center">
+                                <span class="bg-emerald-50 text-emerald-600 font-bold px-1.5 py-0.5 rounded text-[10px] flex items-center shadow-sm">
+                                    ▼ -${Math.abs(percentDelivered).toFixed(1)}%
+                                </span>
+                                <span class="text-[9px] text-emerald-600 font-medium mt-0.5">(-฿${Math.abs(diffDelivered).toFixed(2)})</span>
+                            </div>`;
+                    } else {
+                        momChangeDeliveredDisplay = `<span class="bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full font-semibold text-[10px]">คงที่</span>`;
+                    }
+                } else {
+                    momChangeDeliveredDisplay = `<span class="text-slate-400 italic text-[10px]">N/A</span>`;
+                }
+
+                // สรุปสิทธิประโยชน์ และโปรโมชัน
                 const rebateText = item.rebates.length > 0 ? [...new Set(item.rebates)].join(", ") : "ไม่มี";
                 const promoText = item.promotions.length > 0 ? [...new Set(item.promotions)].join(", ") : "ไม่มี";
                 
-                // ดึงข้อมูล Remarks ทั้งหมดมาแสดงผลแบบเต็มเนื้อความ (ไม่จำกัดความกว้างและไม่ตัดคำ)
+                // ดึงข้อมูล Remarks ทั้งหมดมาแสดงผลแบบเต็มเนื้อความ
                 const uniqueRemarks = [...new Set(item.remarksList)];
                 const remarksDisplayHTML = uniqueRemarks.length > 0 
                     ? uniqueRemarks.map((rem, idx) => `<div class="bg-slate-100 p-2 rounded mb-1 text-slate-700 border-l border-slate-400 leading-relaxed text-[11px] font-normal font-sans shadow-sm">${idx + 1}. ${rem}</div>`).join("")
                     : `<span class="text-slate-400 italic font-normal">- ไม่มีหมายเหตุระบุเพิ่มเติม -</span>`;
 
                 row.innerHTML = `
-                    <td class="p-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-700">${item.region}</span></td>
-                    <td class="p-3">
-                        <div class="font-bold text-slate-800">${item.brand}</div>
-                        <div class="text-[9px] text-slate-500 flex items-center space-x-1 mt-0.5">
+                    <td class="p-2 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-700">${item.region}</span></td>
+                    <td class="p-2">
+                        <div class="font-bold text-slate-800 whitespace-nowrap">${item.brand}</div>
+                        <div class="text-[9px] text-slate-500 flex items-center space-x-1 mt-0.5 whitespace-nowrap">
                             <i class="fa-solid fa-industry text-slate-400"></i> <span>โรงงาน: ${plantLocation}</span>
                         </div>
                     </td>
-                    <td class="p-3 text-center font-bold text-slate-500">${item.size}</td>
-                    <td class="p-3 text-right font-bold text-rose-700 bg-rose-50/10">฿${minEx.toFixed(2)}</td>
-                    <td class="p-3 text-right font-bold text-blue-700 bg-blue-50/10">฿${maxEx.toFixed(2)}</td>
-                    <td class="p-3 text-center border-r border-slate-100">${momChangeDisplay}</td>
-                    <td class="p-3">
-                        <div class="text-[10px] text-slate-700"><span class="font-bold text-blue-600">Rebate:</span> ${rebateText}</div>
-                        <div class="text-[10px] text-slate-700 mt-1"><span class="font-bold text-purple-600">Promo:</span> ${promoText}</div>
+                    <td class="p-2 text-center font-bold text-slate-500">${item.size}</td>
+                    
+                    <!-- ส่วนจัดกลุ่ม Ex-work (ปรับลด padding เป็น p-2) -->
+                    <td class="p-2 text-right font-bold text-rose-700 bg-rose-50/10">฿${minEx.toFixed(2)}</td>
+                    <td class="p-2 text-right font-bold text-blue-700 bg-blue-50/10 border-r border-slate-100">฿${maxEx.toFixed(2)}</td>
+                    <td class="p-2 text-center border-r border-slate-100">${momChangeDisplay}</td>
+                    
+                    <!-- ส่วนจัดกลุ่ม Delivered (ปรับลด padding เป็น p-2) -->
+                    <td class="p-2 text-right font-bold text-amber-700 bg-amber-50/10">฿${minDelivered.toFixed(2)}</td>
+                    <td class="p-2 text-right font-bold text-emerald-700 bg-emerald-50/10 border-r border-slate-100">฿${maxDelivered.toFixed(2)}</td>
+                    <td class="p-2 text-center border-r border-slate-100">${momChangeDeliveredDisplay}</td>
+                    
+                    <td class="p-2">
+                        <div class="text-[10px] text-slate-700 whitespace-normal"><span class="font-bold text-blue-600">Rebate:</span> ${rebateText}</div>
+                        <div class="text-[10px] text-slate-700 mt-1 whitespace-normal"><span class="font-bold text-purple-600">Promo:</span> ${promoText}</div>
                     </td>
-                    <td class="p-3 whitespace-normal align-top font-sans">
+                    <td class="p-2 whitespace-normal align-top font-sans">
                         <div class="flex flex-col space-y-1 w-full max-h-52 overflow-y-auto pr-1">
                             ${remarksDisplayHTML}
                         </div>
@@ -1158,7 +1241,120 @@
             });
         }
 
-        // 12. ฟังก์ชันจัดการเปิดโหมดแก้ไขข้อมูล (Inline Edit Mode)
+        // 12. ฟังก์ชันวิเคราะห์แผนแก้เกมรายภูมิภาคผันแปรตามเดือนปัจจุบัน (Dynamic Action Playbook Generator)
+        function generateDynamicPlaybook(records) {
+            const container = document.getElementById('playbookContainer');
+            if (!container) return;
+
+            const groups = [
+                {
+                    id: "east_north_upper",
+                    title: "ภูมิภาคตะวันออก & เหนือตอนบน (East & North-Upper Base)",
+                    regions: ["East", "North-Upper"],
+                    competitors: ["DRT", "TPI", "Siam ACC", "Smart Block"],
+                    colorClass: "text-yellow-300",
+                    borderClass: "border-yellow-400"
+                },
+                {
+                    id: "metro",
+                    title: "ภูมิภาคกรุงเทพฯ & ปริมณฑล (Metro Base)",
+                    regions: ["Metro"],
+                    competitors: ["Thai con"],
+                    colorClass: "text-cyan-300",
+                    borderClass: "border-cyan-400"
+                },
+                {
+                    id: "west_south",
+                    title: "ภูมิภาคตะวันตก & ภาคใต้ (West & South Base)",
+                    regions: ["West", "South"],
+                    competitors: ["Super Block", "Air Block"],
+                    colorClass: "text-green-300",
+                    borderClass: "border-green-400"
+                },
+                {
+                    id: "esan_north_lower",
+                    title: "ภูมิภาคอีสาน & เหนือตอนล่าง (E-san & North-Lower)",
+                    regions: ["E-san", "North-Lower"],
+                    competitors: ["SD con"],
+                    colorClass: "text-orange-200",
+                    borderClass: "border-orange-300"
+                }
+            ];
+
+            container.innerHTML = ""; 
+
+            groups.forEach(group => {
+                const groupRecords = records.filter(r => group.regions.includes(String(r.region).trim()));
+
+                const qconRecords = groupRecords.filter(r => String(r.brand).trim() === "Q-con");
+                const compRecords = groupRecords.filter(r => String(r.brand).trim() !== "Q-con");
+
+                let qconAvg = 0;
+                if (qconRecords.length > 0) {
+                    const sum = qconRecords.reduce((s, r) => s + getAverageNumericPrice(r.netPrice), 0);
+                    qconAvg = sum / qconRecords.length;
+                }
+
+                let minCompPrice = Infinity;
+                let lowestBrand = "";
+                let latestPromo = "";
+
+                compRecords.forEach(r => {
+                    const price = getAverageNumericPrice(r.netPrice);
+                    if (price > 0 && price < minCompPrice) {
+                        minCompPrice = price;
+                        lowestBrand = r.brand;
+                    }
+                    if (r.promotion && r.promotion !== "ไม่มีโปรโมชัน" && r.promotion !== "ไม่มี" && r.promotion !== "-" && !latestPromo) {
+                        latestPromo = r.promotion;
+                    }
+                });
+
+                let insightHTML = "";
+                let actionHTML = "";
+
+                if (groupRecords.length === 0) {
+                    insightHTML = `ℹ️ ไม่มีข้อมูลเคลื่อนไหวราคาคู่แข่งในรอบเดือนและปีที่เลือกค้นหา`;
+                    actionHTML = `<b>ยุทธวิธีเสนอแนะ:</b> มอบหมายให้ทีมขายในเขตภูมิภาคประจำตัวเร่งลงสำรวจเพื่อป้อนข้อมูลดิบเข้าสู่ฐานข้อมูลกลางคลาวด์ป้องกันการเสียจังหวะเชิงยุทธศาสตร์`;
+                } else if (minCompPrice !== Infinity && qconAvg > 0 && minCompPrice < qconAvg) {
+                    const diff = (qconAvg - minCompPrice).toFixed(2);
+                    insightHTML = `⚠️ ตรวจพบสถานการณ์แข่งขันสูง! แบรนด์ <b>${lowestBrand}</b> เสนอราคาต่ำกว่าค่าเฉลี่ยแนะนำ Q-con อยู่ <b>฿${diff} บาท</b>`;
+                    if (latestPromo) {
+                        insightHTML += ` โดยคู่แข่งเน้นแคมเปญ: <span class="underline">${latestPromo}</span>`;
+                    }
+                    
+                    if (group.id === "east_north_upper") {
+                        actionHTML = `<b>แผนตั้งรับ (Defense Strategy):</b> สั่งการใช้ความได้เปรียบโรงงาน East ของเรา ดันโปรโมชัน Rebate ลอยตัวรายเดือนควบคู่การแถมปูนกาวดิลเลอร์เกรด A ในเขตพัทยา/ชลบุรี เพื่อบล็อก DRT และ TPI ที่กำลังเข้าเจาะกลุ่มเป้าหมาย`;
+                    } else if (group.id === "metro") {
+                        actionHTML = `<b>แผนตั้งรับ (Defense Strategy):</b> ห้ามเข้าปะทะด้วยสงครามราคาหลัก ให้เน้นกลยุทธ์ "Value Selling" ชูมาตรฐานชั้นนำ มอก. สู้กับ Thai con เพื่อดึงงานตึกสูงและโครงการแนวราบขนาดใหญ่ของเครือ SCG`;
+                    } else if (group.id === "west_south") {
+                        actionHTML = `<b>แผนตั้งรับ (Defense Strategy):</b> เร่งระบายสินค้าจากพอร์ตโรงงาน South ยึดครองเขตสุราษฎร์/หาดใหญ่ทั้งหมด เพื่อปิดสิทธิ์ค่าส่งที่คู่แข่งฝั่งตะวันตก (Super Block, Air Block) ไม่สามารถข้ามภาคมาแข่งได้`;
+                    } else {
+                        actionHTML = `<b>แผนตั้งรับ (Defense Strategy):</b> เร่งเจรจาทำสัญญายกล็อตขนาดใหญ่คู่ดิลเลอร์จังหวัดขอนแก่น/โคราช โดยพ่วงเงื่อนไขสนับสนุนเครดิตเทอมยาวเพื่อสกัดแบรนด์ท้องถิ่น SD con`;
+                    }
+                } else {
+                    const priceText = qconAvg > 0 ? `฿${qconAvg.toFixed(2)}` : "ราคาแนะนำมาตรฐาน";
+                    insightHTML = `💚 Q-con ได้เปรียบหรือรักษาสมดุลราคาพอร์ตได้ดีเยี่ยม (ราคากลางเฉลี่ย: ${priceText})`;
+                    if (minCompPrice !== Infinity) {
+                        insightHTML += ` โดยคู่แข่งยี่ห้อใกล้เคียงที่สุดคือ ${lowestBrand} (฿${minCompPrice.toFixed(2)})`;
+                    }
+                    actionHTML = `<b>แผนรุกคืบเชิงรุก (Offensive Action):</b> ยึดระดับราคาเดิมเพื่อพยุงกำไรขั้นต้น และเร่งออกโปรโมชันส่งเสริมยอดขายสำหรับขนาดอิฐหน้ากว้างพิเศษเพื่อกระตุ้นยอดจัดซื้อรวมของร้านค้าวัสดุรายใหญ่`;
+                }
+
+                const card = document.createElement('div');
+                card.className = "bg-slate-900/40 p-4 rounded-xl border border-white/10";
+                card.innerHTML = `
+                    <h3 class="font-bold text-sm ${group.colorClass}"><i class="fa-solid fa-map-location-dot mr-1.5"></i>${group.title}</h3>
+                    <p class="text-[11px] text-slate-100 mt-1 mb-2">${insightHTML}</p>
+                    <div class="text-[11px] text-slate-200 bg-slate-950/40 p-2 rounded border-l-2 ${group.borderClass}">
+                        ${actionHTML}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // 13. ฟังก์ชันจัดการเปิดโหมดแก้ไขข้อมูล (Inline Edit Mode)
         function activateEditMode(index) {
             isEditMode = true;
             const record = globalRawData[index];
@@ -1187,7 +1383,7 @@
             showToast("สลับเข้าสู่โหมดแก้ไขแล้ว", "สามารถปรับแต่งข้อมูลในช่องทางซ้ายมือ และกดยืนยันบันทึกเพื่ออัปเดตข้อมูล", "success");
         }
 
-        // 13. ยกเลิกโหมดแก้ไขข้อมูล
+        // 14. ยกเลิกโหมดแก้ไขข้อมูล
         function cancelEditMode() {
             isEditMode = false;
             document.getElementById('priceForm').reset();
@@ -1200,7 +1396,7 @@
             document.getElementById('btnCancelEdit').classList.add('hidden');
         }
 
-        // 14. ฟังก์ชันส่งออกตารางหน้าเว็บเป็น Excel (.xlsx) ด้วย SheetJS
+        // 15. ฟังก์ชันส่งออกตารางหน้าเว็บเป็น Excel (.xlsx) ด้วย SheetJS
         function exportTableToExcel(tableID, filename = 'competitor-report') {
             const table = document.getElementById(tableID);
             const wb = XLSX.utils.table_to_book(table, { sheet: "Analysis Sheet" });
@@ -1209,7 +1405,7 @@
             showToast("ส่งออกสำเร็จ!", "ดาวน์โหลดไฟล์ตารางวิเคราะห์ในรูปแบบ Excel เรียบร้อยแล้ว", "success");
         }
 
-        // 15. อัปเดตข้อมูลราคา และอัปโหลดไปยัง Google Sheets
+        // 16. อัปเดตข้อมูลราคา และอัปโหลดไปยัง Google Sheets
         function saveData(event) {
             event.preventDefault();
             const btn = document.getElementById('btnSubmitPrice');
@@ -1267,7 +1463,7 @@
             });
         }
 
-        // 16. แสดงผลกล่องข้อความแจ้งเตือน Toast
+        // 17. แสดงผลกล่องข้อความแจ้งเตือน Toast
         function showToast(title, message, type = "success") {
             const toast = document.getElementById('toast');
             const toastIcon = document.getElementById('toastIcon');
